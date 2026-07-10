@@ -3,7 +3,7 @@
  */
 module.exports = {
   // 云开发环境 ID
-  CLOUD_ENV: 'teacher-exam-xxxxx',
+  CLOUD_ENV: 'cloud1-d3gj1jd5w955949b1',
 
   // 分页默认值
   DEFAULT_PAGE_SIZE: 20,
