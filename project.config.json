@@ -1,6 +1,9 @@
 {
   "description": "教师编制刷题 - 微信小程序",
-  "packOptions": { "ignore": [], "include": [] },
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
   "setting": {
     "urlCheck": true,
     "es6": true,
@@ -23,7 +26,11 @@
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
-    "babelSetting": { "ignore": [], "disablePlugins": [], "outputPath": "" },
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
     "condition": false,
     "compileWorklet": false,
     "packNpmManually": false,
@@ -38,11 +45,12 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.6.0",
-  "appid": "touristappid",
+  "appid": "wx501aaa822c567098",
   "projectname": "TeacherExam",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "miniprogram/",
   "cloudfunctionTemplateRoot": "",
   "cloudBaseSetting": {},
   "editorSetting": {},

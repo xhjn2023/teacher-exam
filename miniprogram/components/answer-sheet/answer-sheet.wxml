@@ -9,11 +9,7 @@
     <view class="sheet-body">
       <block wx:for="{{total}}" wx:key="*this">
         <view
-          class="sheet-num
-                 {{index === currentIndex ? 'current' : ''}}
-                 {{answers[index] === 'correct' ? 'done-correct' : ''}}
-                 {{answers[index] === 'wrong' ? 'done-wrong' : ''}}
-                 {{answers[index] === 'answered' ? 'done-answered' : ''}}"
+          class="sheet-num {{index === currentIndex ? 'current' : ''}} {{answers[index] === 'correct' ? 'done-correct' : ''}} {{answers[index] === 'wrong' ? 'done-wrong' : ''}} {{answers[index] === 'answered' ? 'done-answered' : ''}}"
           bindtap="onJump"
           data-index="{{index}}"
         >{{index + 1}}</view>

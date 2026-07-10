@@ -20,8 +20,11 @@ Page({
     this.setData({ studyData: app.globalData.studyData });
 
     request.callFunction('getExamTypes', {}, { cacheTTL: config.CACHE_TTL.EXAM_TYPES })
-      .then(function (res) { that.setData({ examTypes: (res && res.list) || [] }); })
-      .catch(function () {});
+      .then(function (res) {
+        console.log('getExamTypes result:', res);
+        that.setData({ examTypes: (res && res.list) || [] });
+      })
+      .catch(function (err) { console.error('getExamTypes error:', err); });
   },
 
   onShow: function () {

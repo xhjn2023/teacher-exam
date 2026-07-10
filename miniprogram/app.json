@@ -1,53 +1,23 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search/search"
+    "pages/search/search",
+    "package-questionbank/pages/exam-list/exam-list",
+    "package-questionbank/pages/subject-list/subject-list",
+    "package-questionbank/pages/chapter-list/chapter-list",
+    "package-questionbank/pages/chapter-practice/chapter-practice",
+    "package-questionbank/pages/real-paper-list/real-paper-list",
+    "package-questionbank/pages/real-paper-exam/real-paper-exam",
+    "package-questionbank/pages/subjective-recite/subjective-recite",
+    "package-exam/pages/mock-exam-config/mock-exam-config",
+    "package-exam/pages/mock-exam/mock-exam",
+    "package-exam/pages/mock-exam-result/mock-exam-result",
+    "package-user/pages/user-center/user-center",
+    "package-user/pages/error-book/error-book",
+    "package-user/pages/favorites/favorites",
+    "package-user/pages/stats/stats",
+    "package-user/pages/settings/settings"
   ],
-  "subPackages": [
-    {
-      "root": "package-questionbank",
-      "name": "questionbank",
-      "pages": [
-        "pages/exam-list/exam-list",
-        "pages/subject-list/subject-list",
-        "pages/chapter-list/chapter-list",
-        "pages/chapter-practice/chapter-practice",
-        "pages/real-paper-list/real-paper-list",
-        "pages/real-paper-exam/real-paper-exam",
-        "pages/subjective-recite/subjective-recite"
-      ]
-    },
-    {
-      "root": "package-exam",
-      "name": "exam",
-      "pages": [
-        "pages/mock-exam-config/mock-exam-config",
-        "pages/mock-exam/mock-exam",
-        "pages/mock-exam-result/mock-exam-result"
-      ]
-    },
-    {
-      "root": "package-user",
-      "name": "user",
-      "pages": [
-        "pages/user-center/user-center",
-        "pages/error-book/error-book",
-        "pages/favorites/favorites",
-        "pages/stats/stats",
-        "pages/settings/settings"
-      ]
-    }
-  ],
-  "preloadRule": {
-    "pages/index/index": {
-      "network": "all",
-      "packages": ["questionbank"]
-    },
-    "package-questionbank/pages/subject-list/subject-list": {
-      "network": "wifi",
-      "packages": ["exam"]
-    }
-  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#5B8C7E",
@@ -63,26 +33,26 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "static/images/icon-home.webp",
-        "selectedIconPath": "static/images/icon-home-active.webp"
+        "iconPath": "static/images/icon-home.png",
+        "selectedIconPath": "static/images/icon-home-active.png"
       },
       {
         "pagePath": "package-questionbank/pages/exam-list/exam-list",
         "text": "题库",
-        "iconPath": "static/images/icon-bank.webp",
-        "selectedIconPath": "static/images/icon-bank-active.webp"
+        "iconPath": "static/images/icon-bank.png",
+        "selectedIconPath": "static/images/icon-bank-active.png"
       },
       {
         "pagePath": "package-exam/pages/mock-exam-config/mock-exam-config",
         "text": "考场",
-        "iconPath": "static/images/icon-exam.webp",
-        "selectedIconPath": "static/images/icon-exam-active.webp"
+        "iconPath": "static/images/icon-exam.png",
+        "selectedIconPath": "static/images/icon-exam-active.png"
       },
       {
         "pagePath": "package-user/pages/user-center/user-center",
         "text": "我的",
-        "iconPath": "static/images/icon-user.webp",
-        "selectedIconPath": "static/images/icon-user-active.webp"
+        "iconPath": "static/images/icon-user.png",
+        "selectedIconPath": "static/images/icon-user-active.png"
       }
     ]
   },

@@ -1,0 +1,9 @@
+{
+  "name": "getMockQuestions",
+  "version": "1.0.0",
+  "description": "获取模拟考试题目",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
