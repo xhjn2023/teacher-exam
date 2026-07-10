@@ -1,0 +1,70 @@
+<!-- 主包共享组件：题目卡片 -->
+<view class="q-card {{hasAnswered ? 'answered' : ''}} {{showAnalysis ? 'show-analysis' : ''}}">
+  <!-- 题号 + 题型标签 -->
+  <view class="q-header">
+    <text class="q-index">{{index}}{{index ? '.' : ''}} </text>
+    <text class="q-type tag">{{typeLabel}}</text>
+    <view class="flex-1"></view>
+    <view class="favorite-btn" bindtap="onToggleFav">
+      <text class="{{isFavorited ? 'fav-active' : ''}}">{{isFavorited ? '★' : '☆'}}</text>
+    </view>
+  </view>
+
+  <!-- 题干（支持 HTML） -->
+  <view class="q-title"><rich-text nodes="{{question.question}}"></rich-text></view>
+
+  <!-- 选项区（选择题/判断题） -->
+  <view class="q-options" wx:if="{{question.options && question.options.length && (question.type === 'single' || question.type === 'multi' || question.type === 'judge')}}">
+    <block wx:for="{{question.options}}" wx:key="index">
+      <view
+        class="option-item {{userAnswer === item.key ? 'selected' : ''}} {{showAnalysis && item.key === question.answer ? 'correct' : ''}} {{showAnalysis && userAnswer === item.key && userAnswer !== question.answer ? 'wrong' : ''}}"
+        bindtap="onSelect"
+        data-key="{{item.key}}"
+        data-index="{{index}}"
+      >
+        <text class="option-label">{{item.label}}</text>
+        <text class="option-text">{{item.text}}</text>
+        <text class="option-icon" wx:if="{{showAnalysis}}">{{item.key === question.answer ? '✓' : (userAnswer === item.key ? '✗' : '')}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 填空题 -->
+  <view class="q-fill" wx:if="{{question.type === 'fill'}}">
+    <input class="fill-input" value="{{userAnswer}}" placeholder="请输入答案" bindinput="onFillInput" disabled="{{showAnalysis}}" />
+    <view class="fill-answer" wx:if="{{showAnalysis}}">
+      <text class="text-secondary">参考答案：</text>
+      <text class="text-primary">{{question.answer}}</text>
+    </view>
+  </view>
+
+  <!-- 判断题答案区 -->
+  <view class="q-judge-btns" wx:if="{{question.type === 'judge'}}">
+    <view class="judge-btn {{userAnswer === '对' ? 'selected' : ''}}" bindtap="onJudgeSelect" data-key="对">对</view>
+    <view class="judge-btn {{userAnswer === '错' ? 'selected' : ''}}" bindtap="onJudgeSelect" data-key="错">错</view>
+  </view>
+
+  <!-- 主观题 -->
+  <view class="q-essay" wx:if="{{question.type === 'essay' || question.type === 'explain'}}">
+    <textarea class="essay-textarea" value="{{userAnswer}}" placeholder="请输入答案" bindinput="onEssayInput" disabled="{{showAnalysis}}" auto-height></textarea>
+  </view>
+
+  <!-- 解析区 -->
+  <view class="q-analysis" wx:if="{{showAnalysis}}">
+    <view class="analysis-header">
+      <view class="analysis-flag {{isCorrect ? 'correct' : 'wrong'}}">{{isCorrect ? '已掌握 ✓' : '再记一下'}}</view>
+    </view>
+    <view class="analysis-content">
+      <text class="text-secondary">解析：</text>
+      <rich-text nodes="{{question.analysis}}"></rich-text>
+    </view>
+    <view class="knowledge-tags" wx:if="{{question.knowledgeTags && question.knowledgeTags.length}}">
+      <knowledge-tag wx:for="{{question.knowledgeTags}}" wx:key="name" name="{{item.name}}" detail="{{item.detail}}"></knowledge-tag>
+    </view>
+  </view>
+
+  <!-- 操作区 -->
+  <view class="q-actions" wx:if="{{!showAnalysis}}">
+    <view class="action-btn" bindtap="onSubmit">提交答案</view>
+  </view>
+</view>

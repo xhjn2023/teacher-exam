@@ -1,0 +1,38 @@
+/* 倒计时 */
+.timer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 28rpx;
+  border-radius: 16rpx;
+  background: #F2F4F3;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.timer-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #5B8C7E;
+  letter-spacing: 2rpx;
+}
+
+/* 小于5分钟 —— 橙色 */
+.timer-bar.warning .timer-text {
+  color: #E6A23C;
+}
+
+/* 小于1分钟 —— 红色脉冲 */
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.05); }
+}
+
+.timer-bar.danger {
+  background: #FDEDED;
+}
+
+.timer-bar.danger .timer-text {
+  color: #D96C6C;
+  animation: pulse-red 0.8s ease-in-out infinite;
+}

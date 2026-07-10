@@ -1,0 +1,27 @@
+<view class="sheet-overlay {{visible ? 'show' : ''}}" catchtouchmove="{{false}}" wx:if="{{visible}}">
+  <view class="sheet-mask" bindtap="onClose"></view>
+  <view class="sheet-panel">
+    <view class="sheet-header">
+      <text class="sheet-title">答题卡</text>
+      <text class="sheet-close" bindtap="onClose">✕</text>
+    </view>
+
+    <view class="sheet-body">
+      <block wx:for="{{total}}" wx:key="*this">
+        <view
+          class="sheet-num
+                 {{index === currentIndex ? 'current' : ''}}
+                 {{answers[index] === 'correct' ? 'done-correct' : ''}}
+                 {{answers[index] === 'wrong' ? 'done-wrong' : ''}}
+                 {{answers[index] === 'answered' ? 'done-answered' : ''}}"
+          bindtap="onJump"
+          data-index="{{index}}"
+        >{{index + 1}}</view>
+      </block>
+    </view>
+
+    <view class="sheet-footer">
+      <view class="sheet-submit-btn" bindtap="onSubmit">交卷</view>
+    </view>
+  </view>
+</view>

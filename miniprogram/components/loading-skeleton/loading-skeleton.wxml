@@ -1,0 +1,37 @@
+<view class="skeleton">
+  <!-- list 骨架 -->
+  <block wx:if="{{type === 'list'}}">
+    <view class="sk-row" wx:for="{{[1,2,3,4]}}" wx:key="*this">
+      <view class="sk-avatar"></view>
+      <view class="sk-lines">
+        <view class="sk-line w80"></view>
+        <view class="sk-line w60"></view>
+      </view>
+    </view>
+  </block>
+
+  <!-- card 骨架 -->
+  <block wx:if="{{type === 'card'}}">
+    <view class="sk-row" wx:for="{{[1,2,3]}}" wx:key="*this">
+      <view class="sk-card">
+        <view class="sk-line w90"></view>
+        <view class="sk-line w100"></view>
+        <view class="sk-line w70"></view>
+      </view>
+    </view>
+  </block>
+
+  <!-- detail 骨架 -->
+  <block wx:if="{{type === 'detail'}}">
+    <view class="sk-detail">
+      <view class="sk-line w100 sk-title"></view>
+      <view class="sk-line w80"></view>
+      <view class="sk-line w90"></view>
+      <view class="sk-line w100"></view>
+      <view class="sk-line w60"></view>
+      <view class="sk-block"></view>
+      <view class="sk-line w100"></view>
+      <view class="sk-line w70"></view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,45 @@
+.page {
+  padding: 20rpx 24rpx;
+  min-height: 100vh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.subject-card {
+  padding: 28rpx 24rpx;
+  transition: transform 0.15s ease;
+}
+
+.subject-card:active {
+  transform: scale(0.98);
+}
+
+.subject-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.arrow {
+  font-size: 36rpx;
+  color: var(--text-hint);
+}
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-card {
+  padding: 28rpx 24rpx;
+}
+
+.skeleton-title {
+  height: 32rpx;
+  width: 70%;
+}

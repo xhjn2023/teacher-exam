@@ -1,0 +1,87 @@
+<view class="page">
+  <!-- 用户信息头部 -->
+  <view class="user-header card">
+    <view class="flex-row gap-md">
+      <button class="avatar-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" wx:if="{{!hasUserInfo}}">
+        <view class="avatar-placeholder">🙂</view>
+      </button>
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" wx:else></image>
+      <view class="flex-1">
+        <view class="user-name" wx:if="{{hasUserInfo}}">{{userInfo.nickName || '备考同学'}}</view>
+        <view class="user-name" wx:else>点击头像登录</view>
+        <view class="user-motto text-sm text-hint">努力的人，运气不会差</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习统计 -->
+  <view class="stats-bar" wx:if="{{studyData}}">
+    <view class="stat-item">
+      <view class="stat-num">{{studyData.totalDays || 0}}</view>
+      <view class="stat-label">学习天数</view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-num">{{studyData.totalCount || 0}}</view>
+      <view class="stat-label">已刷题</view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-num">{{studyData.correctRate || '0%'}}</view>
+      <view class="stat-label">正确率</view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <view class="menu-item card" bindtap="goErrorBook">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">📝</view>
+          <view>
+            <view class="menu-title">错题本</view>
+            <view class="menu-desc text-sm text-hint">温习错题，查漏补缺</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+
+    <view class="menu-item card" bindtap="goFavorites">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">⭐</view>
+          <view>
+            <view class="menu-title">题目收藏</view>
+            <view class="menu-desc text-sm text-hint">收藏喜欢的题目</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+
+    <view class="menu-item card" bindtap="goStats">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">📊</view>
+          <view>
+            <view class="menu-title">学习数据</view>
+            <view class="menu-desc text-sm text-hint">查看详细学习数据</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+
+    <view class="menu-item card" bindtap="goSettings">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">⚙️</view>
+          <view>
+            <view class="menu-title">设置</view>
+            <view class="menu-desc text-sm text-hint">缓存管理 · 关于我们</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+  </view>
+</view>

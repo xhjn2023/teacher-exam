@@ -1,0 +1,57 @@
+<!-- 首页 -->
+<view class="page">
+  <!-- 离线提示 -->
+  <view class="offline-bar" wx:if="{{_isOffline}}">已切换至离线模式</view>
+
+  <!-- 顶部横幅 -->
+  <view class="hero">
+    <view class="hero-title">{{greeting}}</view>
+    <view class="hero-sub">教师编制备考 · 每一步都算数</view>
+    <view class="hero-stats" wx:if="{{studyData}}">
+      <view class="stat-item">
+        <text class="stat-num">{{studyData.totalDays || 0}}</text>
+        <text class="stat-label">学习天数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{studyData.totalCount || 0}}</text>
+        <text class="stat-label">已刷题</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{studyData.correctRate || '0%'}}</text>
+        <text class="stat-label">正确率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 考试入口 -->
+  <view class="section">
+    <view class="section-title">选择备考方向</view>
+    <view class="exam-grid">
+      <view class="exam-item card" wx:for="{{examTypes}}" wx:key="_id" bindtap="onEnter" data-type="{{item}}">
+        <image class="exam-icon" src="{{item.icon}}" mode="aspectFill" lazy-load></image>
+        <text class="exam-name">{{item.name}}</text>
+        <text class="exam-desc">{{item.desc || '真题+模拟+章节练习'}}</text>
+      </view>
+      <view class="exam-item card" wx:if="{{examTypes.length === 0}}">
+        <loading-skeleton type="card"></loading-skeleton>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="section">
+    <view class="section-title">快捷入口</view>
+    <view class="quick-grid">
+      <view class="quick-item card" bindtap="goRecite">
+        <text class="quick-icon">📖</text>
+        <text class="quick-label">主观题背诵</text>
+      </view>
+      <view class="quick-item card" bindtap="goSearch">
+        <text class="quick-icon">🔍</text>
+        <text class="quick-label">搜索题目</text>
+      </view>
+    </view>
+  </view>
+</view>

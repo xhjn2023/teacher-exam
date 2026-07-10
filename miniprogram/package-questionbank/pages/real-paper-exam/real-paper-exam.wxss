@@ -1,0 +1,208 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-page);
+}
+
+/* 顶部栏 */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 24rpx;
+  background: var(--bg-card);
+}
+
+.paper-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.paper-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  max-width: 360rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.paper-meta {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-top: 4rpx;
+}
+
+.timer-section {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.sheet-trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rpx 12rpx;
+  border-radius: 8rpx;
+  background: var(--primary-pale);
+}
+
+.sheet-icon {
+  font-size: 28rpx;
+  color: var(--primary);
+}
+
+.sheet-text {
+  font-size: 18rpx;
+  color: var(--primary);
+}
+
+/* 进度条 */
+.exam-progress {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 24rpx;
+  background: var(--bg-card);
+  gap: 16rpx;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6rpx;
+  background: var(--border);
+  border-radius: 3rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 3rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  min-width: 80rpx;
+  text-align: right;
+}
+
+/* 滚动区域 */
+.scroll-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.question-wrap {
+  padding: 0;
+}
+
+/* 底部栏 */
+.bottom-bar {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 16rpx;
+  padding-bottom: calc(12rpx + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.04);
+  gap: 12rpx;
+}
+
+.bar-btn {
+  padding: 16rpx 28rpx;
+  font-size: 26rpx;
+  border-radius: var(--radius);
+  background: var(--bg-page);
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.bar-btn:active {
+  opacity: 0.8;
+}
+
+.bar-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.bar-center {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.submit-btn {
+  background: var(--primary) !important;
+  color: #FFFFFF !important;
+  font-weight: 500;
+}
+
+/* 交卷确认弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  width: 560rpx;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.modal-title {
+  padding: 32rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 0 32rpx 32rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.modal-actions {
+  display: flex;
+  border-top: 1rpx solid var(--border);
+}
+
+.modal-btn {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx;
+  font-size: 30rpx;
+}
+
+.modal-btn.cancel {
+  color: var(--text-secondary);
+  border-right: 1rpx solid var(--border);
+}
+
+.modal-btn.confirm {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.modal-btn:active {
+  background: var(--bg-page);
+}

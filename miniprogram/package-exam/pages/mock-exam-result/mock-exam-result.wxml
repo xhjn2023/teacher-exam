@@ -1,0 +1,40 @@
+<view class="page">
+  <view class="result-content">
+    <!-- 环形进度 -->
+    <view class="ring-wrap">
+      <view class="ring-outer" style="background: conic-gradient({{ringColor}} 0deg {{ringDeg}}deg, #E8ECEB {{ringDeg}}deg 360deg)">
+        <view class="ring-inner">
+          <view class="ring-rate {{showAnimation ? 'animate' : ''}}">{{correctRate}}</view>
+          <view class="ring-label">正确率</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 数据卡片 -->
+    <view class="stats-row">
+      <view class="stat-card">
+        <view class="stat-num text-primary">{{score}}</view>
+        <view class="stat-label">得分</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-num text-primary">{{correctCount}}/{{totalCount}}</view>
+        <view class="stat-label">正确 / 总题</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-num text-primary">{{correctRate}}</view>
+        <view class="stat-label">正确率</view>
+      </view>
+    </view>
+
+    <!-- 鼓励文案 -->
+    <view class="encourage card text-center">
+      <view class="encourage-text">{{correctRate >= 80 ? '太棒了，继续保持！' : correctRate >= 60 ? '还不错，再加把劲~' : '别灰心，进步在路上'}}</view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="btns">
+      <view class="btn-ghost" bindtap="goErrorBook">查看错题</view>
+      <view class="btn-primary" bindtap="goHome">返回首页</view>
+    </view>
+  </view>
+</view>

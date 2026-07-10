@@ -1,0 +1,9 @@
+<view class="k-tag {{expanded ? 'expanded' : ''}}" bindtap="onToggle">
+  <view class="k-tag-header">
+    <text class="k-tag-name">{{name}}</text>
+    <text class="k-tag-arrow">{{expanded ? '▾' : '▸'}}</text>
+  </view>
+  <view class="k-tag-detail" wx:if="{{expanded}}">
+    <text class="k-tag-text">{{detail}}</text>
+  </view>
+</view>

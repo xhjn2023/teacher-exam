@@ -1,0 +1,132 @@
+.page {
+  padding: 40rpx 24rpx;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28rpx;
+}
+
+/* 环形进度 */
+.ring-wrap {
+  position: relative;
+}
+
+.ring-outer {
+  width: 280rpx;
+  height: 280rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.6s ease;
+}
+
+.ring-inner {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-rate {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.5s ease 0.2s;
+}
+
+.ring-rate.animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ring-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 6rpx;
+}
+
+/* 数据行 */
+.stats-row {
+  display: flex;
+  gap: 16rpx;
+  width: 100%;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24rpx 12rpx;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: var(--text-hint);
+}
+
+/* 鼓励 */
+.encourage {
+  width: calc(100% - 48rpx);
+  padding: 24rpx;
+}
+
+.encourage-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+/* 按钮 */
+.btns {
+  width: 100%;
+  display: flex;
+  gap: 20rpx;
+  margin-top: 16rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.btns .btn-primary,
+.btns .btn-ghost {
+  flex: 1;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+  font-weight: 500;
+  text-align: center;
+  border-radius: var(--radius);
+}
+
+.btns .btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  color: #fff;
+  border: none;
+}
+
+.btns .btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+}

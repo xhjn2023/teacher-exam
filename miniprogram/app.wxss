@@ -1,0 +1,149 @@
+/**
+ * 教师编制刷题 — 全局样式
+ * 简约治愈风格，面向考编备考人群
+ */
+
+/* 色板变量 */
+page {
+  --primary: #5B8C7E;
+  --primary-deep: #3F6F62;
+  --primary-light: #8AB5A8;
+  --primary-pale: rgba(91,140,126,0.12);
+  --accent: #E8913A;
+  --accent-pale: rgba(232,145,58,0.12);
+  --danger: #D96C6C;
+  --danger-pale: rgba(217,108,108,0.10);
+  --text-primary: #2B3A42;
+  --text-secondary: #6B7B82;
+  --text-hint: #A0A8AD;
+  --bg-page: #F2F4F3;
+  --bg-card: #FFFFFF;
+  --border: #E8ECEB;
+  --shadow: 0 4rpx 24rpx rgba(0,0,0,0.06);
+  --radius: 16rpx;
+  --radius-lg: 24rpx;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  font-size: 28rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  color: #FFFFFF;
+  border-radius: var(--radius);
+  font-size: 28rpx;
+  padding: 20rpx 40rpx;
+  text-align: center;
+  border: none;
+}
+.btn-primary:active { opacity: 0.85; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  border: 1rpx solid var(--primary);
+  border-radius: var(--radius);
+  font-size: 26rpx;
+  padding: 16rpx 32rpx;
+  text-align: center;
+}
+.btn-ghost:active { background: var(--primary-pale); }
+
+.btn-danger-text {
+  background: transparent;
+  color: var(--danger);
+  font-size: 26rpx;
+  padding: 16rpx 32rpx;
+  text-align: center;
+  border: none;
+}
+
+/* 通用分隔 */
+.divider {
+  height: 1rpx;
+  background: var(--border);
+  margin: 20rpx 0;
+}
+
+/* 文本工具 */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-hint { color: var(--text-hint); }
+.text-danger { color: var(--danger); }
+.text-sm { font-size: 24rpx; }
+.text-lg { font-size: 32rpx; }
+.text-xl { font-size: 36rpx; }
+
+/* 布局工具 */
+.flex-row { display: flex; align-items: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+.gap-sm { gap: 12rpx; }
+.gap-md { gap: 20rpx; }
+.gap-lg { gap: 32rpx; }
+
+/* 间距 */
+.mt-sm { margin-top: 12rpx; }
+.mt-md { margin-top: 20rpx; }
+.mt-lg { margin-top: 32rpx; }
+.mb-sm { margin-bottom: 12rpx; }
+.mb-md { margin-bottom: 20rpx; }
+.p-sm { padding: 16rpx; }
+.p-md { padding: 24rpx; }
+
+/* 标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  background: var(--primary-pale);
+  color: var(--primary);
+}
+.tag-accent {
+  background: var(--accent-pale);
+  color: var(--accent);
+}
+.tag-danger {
+  background: var(--danger-pale);
+  color: var(--danger);
+}
+
+/* 离线提示条 */
+.offline-bar {
+  background: #FFF3E6;
+  color: var(--accent);
+  text-align: center;
+  padding: 12rpx;
+  font-size: 24rpx;
+}
+
+/* 骨架屏 */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8rpx;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

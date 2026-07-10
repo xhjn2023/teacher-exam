@@ -1,0 +1,14 @@
+<view class="flip-wrap" bindtap="onFlip">
+  <view class="flip-inner {{flipped ? 'flipped' : ''}}">
+    <!-- 正面：题干 -->
+    <view class="flip-front">
+      <text class="flip-label">题目</text>
+      <text class="flip-content">{{question}}</text>
+    </view>
+    <!-- 背面：答案 -->
+    <view class="flip-back">
+      <text class="flip-label">答案</text>
+      <text class="flip-content">{{answer}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,51 @@
+<view class="page" wx:if="{{!loading}}">
+  <!-- 总览大卡片 -->
+  <view class="overview card">
+    <view class="overview-grid">
+      <view class="ov-item">
+        <view class="ov-num">{{totalDays}}</view>
+        <view class="ov-label">学习天数</view>
+      </view>
+      <view class="ov-item">
+        <view class="ov-num">{{totalCount}}</view>
+        <view class="ov-label">总题量</view>
+      </view>
+      <view class="ov-item">
+        <view class="ov-num">{{correctRate}}</view>
+        <view class="ov-label">正确率</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 30天柱状图 -->
+  <view class="section card" wx:if="{{totalCount > 0}}">
+    <view class="section-title">近30天每日题量</view>
+    <canvas canvas-id="dailyChart" class="chart-canvas" style="width: 690rpx; height: 360rpx;"></canvas>
+  </view>
+
+  <!-- 科目正确率 -->
+  <view class="section card" wx:if="{{subjectRates.length > 0}}">
+    <view class="section-title">各科目正确率</view>
+    <view class="subject-rate-row" wx:for="{{subjectRates}}" wx:key="subjectId">
+      <view class="sr-name">{{item.subjectName || item.name}}</view>
+      <view class="sr-bar-wrap">
+        <view class="sr-bar" style="width: {{item.rate || 0}}%"></view>
+      </view>
+      <view class="sr-rate">{{item.rate || 0}}%</view>
+    </view>
+  </view>
+
+  <empty-state wx:if="{{totalCount === 0}}" title="做几道题" subtitle="数据就会出现了"></empty-state>
+</view>
+
+<view wx:if="{{loading}}" class="skeleton-page">
+  <view class="card skeleton-ov">
+    <view class="skeleton skeleton-text"></view>
+    <view class="skeleton skeleton-text mt-md"></view>
+    <view class="skeleton skeleton-text mt-md"></view>
+  </view>
+  <view class="card skeleton-section mt-md">
+    <view class="skeleton skeleton-title"></view>
+    <view class="skeleton skeleton-chart mt-md"></view>
+  </view>
+</view>

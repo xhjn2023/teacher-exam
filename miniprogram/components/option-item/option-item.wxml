@@ -1,0 +1,9 @@
+<view
+  class="opt-item {{selected ? 'selected' : ''}} {{correct ? 'correct' : ''}} {{wrong ? 'wrong' : ''}}"
+  bindtap="onTap"
+>
+  <text class="opt-label">{{label}}</text>
+  <text class="opt-text">{{text}}</text>
+  <text class="opt-icon" wx:if="{{correct}}">✓</text>
+  <text class="opt-icon" wx:if="{{wrong}}">✗</text>
+</view>

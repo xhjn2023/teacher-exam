@@ -1,0 +1,47 @@
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <input class="search-input" placeholder="输入关键词搜索题目" value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" confirm-type="search" maxlength="50" />
+      <view class="search-clear" wx:if="{{keyword}}" bindtap="onClear">✕</view>
+    </view>
+    <view class="search-btn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view class="results" wx:if="{{hasSearched && !searching}}">
+    <view class="result-item card" wx:for="{{results}}" wx:key="_id" data-item="{{item}}" bindtap="onItemTap">
+      <view class="flex-row gap-sm mb-sm">
+        <text class="tag">{{item.typeLabel || '题目'}}</text>
+        <text class="text-sm text-hint" wx:if="{{item.subjectName}}">{{item.subjectName}}</text>
+        <text class="text-sm text-hint" wx:if="{{item.chapterName}}">· {{item.chapterName}}</text>
+      </view>
+      <view class="result-content">{{item.title || item.questionText || item.content || '暂无摘要'}}</view>
+    </view>
+
+    <view wx:if="{{loadingMore}}" class="load-more">
+      <text class="text-hint text-sm">加载中…</text>
+    </view>
+    <view wx:if="{{noMore && results.length > 0}}" class="load-more">
+      <text class="text-hint text-sm">— 已经到底了 —</text>
+    </view>
+
+    <empty-state wx:if="{{results.length === 0}}" title="换个关键词试试？" subtitle="试试调整搜索词"></empty-state>
+  </view>
+
+  <!-- 搜索中 -->
+  <view wx:if="{{searching}}" class="searching">
+    <view class="loading-dots">
+      <text class="dot"></text>
+      <text class="dot"></text>
+      <text class="dot"></text>
+    </view>
+    <text class="text-hint text-sm mt-md">搜索中…</text>
+  </view>
+
+  <!-- 未搜索 -->
+  <view class="search-hint" wx:if="{{!hasSearched && !searching}}">
+    <view class="hint-icon">🔍</view>
+    <view class="hint-text text-secondary">输入关键词，搜索题库中的题目</view>
+  </view>
+</view>

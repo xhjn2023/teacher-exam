@@ -1,0 +1,101 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search"
+  ],
+  "subPackages": [
+    {
+      "root": "package-questionbank",
+      "name": "questionbank",
+      "pages": [
+        "pages/exam-list/exam-list",
+        "pages/subject-list/subject-list",
+        "pages/chapter-list/chapter-list",
+        "pages/chapter-practice/chapter-practice",
+        "pages/real-paper-list/real-paper-list",
+        "pages/real-paper-exam/real-paper-exam",
+        "pages/subjective-recite/subjective-recite"
+      ]
+    },
+    {
+      "root": "package-exam",
+      "name": "exam",
+      "pages": [
+        "pages/mock-exam-config/mock-exam-config",
+        "pages/mock-exam/mock-exam",
+        "pages/mock-exam-result/mock-exam-result"
+      ]
+    },
+    {
+      "root": "package-user",
+      "name": "user",
+      "pages": [
+        "pages/user-center/user-center",
+        "pages/error-book/error-book",
+        "pages/favorites/favorites",
+        "pages/stats/stats",
+        "pages/settings/settings"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["questionbank"]
+    },
+    "package-questionbank/pages/subject-list/subject-list": {
+      "network": "wifi",
+      "packages": ["exam"]
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#5B8C7E",
+    "navigationBarTitleText": "教师编制刷题",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#9B9B9B",
+    "selectedColor": "#5B8C7E",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/images/icon-home.webp",
+        "selectedIconPath": "static/images/icon-home-active.webp"
+      },
+      {
+        "pagePath": "package-questionbank/pages/exam-list/exam-list",
+        "text": "题库",
+        "iconPath": "static/images/icon-bank.webp",
+        "selectedIconPath": "static/images/icon-bank-active.webp"
+      },
+      {
+        "pagePath": "package-exam/pages/mock-exam-config/mock-exam-config",
+        "text": "考场",
+        "iconPath": "static/images/icon-exam.webp",
+        "selectedIconPath": "static/images/icon-exam-active.webp"
+      },
+      {
+        "pagePath": "package-user/pages/user-center/user-center",
+        "text": "我的",
+        "iconPath": "static/images/icon-user.webp",
+        "selectedIconPath": "static/images/icon-user-active.webp"
+      }
+    ]
+  },
+  "usingComponents": {
+    "question-card": "/components/question-card/question-card",
+    "timer-bar": "/components/timer-bar/timer-bar",
+    "option-item": "/components/option-item/option-item",
+    "answer-sheet": "/components/answer-sheet/answer-sheet",
+    "knowledge-tag": "/components/knowledge-tag/knowledge-tag",
+    "empty-state": "/components/empty-state/empty-state",
+    "loading-skeleton": "/components/loading-skeleton/loading-skeleton",
+    "flip-card": "/components/flip-card/flip-card"
+  },
+  "cloud": true,
+  "lazyCodeLoading": "requiredComponents"
+}

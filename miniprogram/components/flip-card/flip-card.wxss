@@ -1,0 +1,59 @@
+/* 翻转卡片 */
+.flip-wrap {
+  perspective: 1200rpx;
+  width: 100%;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  min-height: 360rpx;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 360rpx;
+  padding: 32rpx;
+  border-radius: 16rpx;
+  background: #fff;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.flip-front {
+  z-index: 2;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  background: #F2F4F3;
+}
+
+.flip-label {
+  font-size: 22rpx;
+  color: #5B8C7E;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 2rpx solid #5B8C7E;
+}
+
+.flip-content {
+  font-size: 30rpx;
+  color: #333;
+  line-height: 1.8;
+  word-break: break-all;
+}

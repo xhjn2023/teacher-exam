@@ -1,0 +1,88 @@
+<view class="page">
+  <!-- 顶部计时和信息栏 -->
+  <view class="top-bar">
+    <view class="paper-info">
+      <text class="paper-title">模拟考场</text>
+      <text class="paper-meta" wx:if="{{questions.length}}">{{questions.length}}题 · {{formatDuration(totalDuration)}}</text>
+    </view>
+    <view class="timer-section" bindtap="toggleSheet">
+      <timer-bar remaining="{{remainingSeconds}}"></timer-bar>
+      <view class="sheet-trigger">
+        <text class="sheet-icon">☰</text>
+        <text class="sheet-text">答题卡</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 进度条 -->
+  <view class="exam-progress">
+    <view class="progress-track">
+      <view class="progress-fill" style="width:{{questions.length ? (answeredCount/questions.length*100) : 0}}%"></view>
+    </view>
+    <text class="progress-text">{{answeredCount}}/{{questions.length}}</text>
+  </view>
+
+  <!-- 题目区域 -->
+  <scroll-view class="scroll-wrap" scroll-y enable-passive show-scrollbar="{{false}}">
+    <loading-skeleton wx:if="{{loading}}"></loading-skeleton>
+
+    <view wx:elif="{{questions.length > 0}}" class="question-wrap">
+      <question-card
+        wx:for="{{questions}}"
+        wx:key="_id"
+        wx:if="{{index === current}}"
+        question="{{item}}"
+        index="{{index+1}}"
+        userAnswer="{{answers[item._id]}}"
+        showAnalysis="{{false}}"
+        isFavorited="{{false}}"
+        mode="exam"
+        bind:answer="onAnswer"
+        bind:submit="onSubmitSingle"
+      />
+    </view>
+
+    <empty-state
+      wx:elif="{{!loading && questions.length === 0}}"
+      text="暂无题目"
+      actionText="返回"
+      bind:action="goBack"
+    ></empty-state>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="bar-btn {{current <= 0 ? 'disabled' : ''}}" bindtap="prevQ">上一题</view>
+    <view class="bar-center" bindtap="toggleSheet">
+      <text>{{current+1}} / {{questions.length}}</text>
+    </view>
+    <view class="bar-btn {{current >= questions.length-1 ? 'disabled' : ''}}" bindtap="nextQ">下一题</view>
+    <view class="bar-btn submit-btn" bindtap="onConfirmSubmit">交卷</view>
+  </view>
+
+  <!-- 答题卡浮层 -->
+  <answer-sheet
+    visible="{{showSheet}}"
+    total="{{questions.length}}"
+    answers="{{sheetAnswers}}"
+    currentIndex="{{current}}"
+    bind:jump="onJump"
+    bind:close="toggleSheet"
+    bind:submit="onConfirmSubmit"
+  ></answer-sheet>
+
+  <!-- 交卷确认弹窗 -->
+  <view class="modal-mask" wx:if="{{showConfirmModal}}" catchtouchmove="{{false}}">
+    <view class="modal-box">
+      <view class="modal-title">确认交卷</view>
+      <view class="modal-body">
+        <text>已答 {{answeredCount}} / {{questions.length}} 题</text>
+        <text wx:if="{{unansweredCount > 0}}" class="text-danger mt-sm block">还有 {{unansweredCount}} 题未作答，交卷后无法修改</text>
+      </view>
+      <view class="modal-actions">
+        <view class="modal-btn cancel" bindtap="hideConfirm">继续答题</view>
+        <view class="modal-btn confirm" bindtap="doSubmit">确认交卷</view>
+      </view>
+    </view>
+  </view>
+</view>

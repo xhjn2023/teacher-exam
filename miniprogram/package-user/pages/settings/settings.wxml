@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="menu-list">
+    <!-- 缓存 -->
+    <view class="menu-item card">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">💾</view>
+          <view>
+            <view class="menu-title">缓存大小</view>
+            <view class="menu-desc text-sm text-hint">{{cacheSize}}</view>
+          </view>
+        </view>
+        <view class="flex-row gap-sm">
+          <view class="action-btn btn-ghost" bindtap="onClearCache">清除缓存</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关于 -->
+    <view class="menu-item card" bindtap="onAboutTap">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon">ℹ️</view>
+          <view>
+            <view class="menu-title">关于我们</view>
+            <view class="menu-desc text-sm text-hint">版本 {{version}}</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部文案 -->
+  <view class="footer text-center">
+    <view class="footer-logo">教师编制刷题</view>
+    <view class="footer-motto text-sm text-hint">每一步都算数</view>
+  </view>
+</view>

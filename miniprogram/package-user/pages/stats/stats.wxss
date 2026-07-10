@@ -1,0 +1,128 @@
+.page {
+  padding: 20rpx 24rpx;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* 总览 */
+.overview {
+  padding: 32rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.overview-grid {
+  display: flex;
+}
+
+.ov-item {
+  flex: 1;
+  text-align: center;
+}
+
+.ov-num {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.ov-label {
+  font-size: 24rpx;
+  color: var(--text-hint);
+  margin-top: 8rpx;
+}
+
+/* 图表区域 */
+.section {
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16rpx;
+}
+
+.chart-canvas {
+  width: 100%;
+  height: auto;
+  background: #fff;
+}
+
+/* 科目正确率 */
+.subject-rate-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 12rpx 0;
+}
+
+.subject-rate-row + .subject-rate-row {
+  border-top: 1rpx solid var(--border);
+}
+
+.sr-name {
+  width: 140rpx;
+  font-size: 26rpx;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+.sr-bar-wrap {
+  flex: 1;
+  height: 14rpx;
+  background: var(--bg-page);
+  border-radius: 7rpx;
+  overflow: hidden;
+}
+
+.sr-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-light), var(--primary));
+  border-radius: 7rpx;
+  transition: width 0.6s ease;
+}
+
+.sr-rate {
+  width: 64rpx;
+  font-size: 24rpx;
+  color: var(--primary);
+  font-weight: 600;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* 骨架屏 */
+.skeleton-page {
+  padding: 20rpx 24rpx;
+}
+
+.skeleton-ov {
+  padding: 32rpx 24rpx;
+}
+
+.skeleton-text {
+  height: 28rpx;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.skeleton-section {
+  padding: 24rpx;
+}
+
+.skeleton-title {
+  height: 32rpx;
+  width: 50%;
+}
+
+.skeleton-chart {
+  height: 320rpx;
+  width: 100%;
+  border-radius: 8rpx;
+}

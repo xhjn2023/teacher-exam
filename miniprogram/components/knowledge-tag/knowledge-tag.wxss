@@ -1,0 +1,44 @@
+/* 知识点标签 */
+.k-tag {
+  background: #F2F4F3;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.k-tag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.k-tag-name {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #5B8C7E;
+}
+
+.k-tag-arrow {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.k-tag-detail {
+  margin-top: 12rpx;
+  padding-top: 12rpx;
+  border-top: 1rpx solid #E8ECEA;
+  animation: tagExpand 0.25s ease;
+}
+
+@keyframes tagExpand {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 300rpx; }
+}
+
+.k-tag-text {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+}

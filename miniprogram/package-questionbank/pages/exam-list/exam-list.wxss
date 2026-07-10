@@ -1,0 +1,64 @@
+.page {
+  padding: 20rpx 24rpx;
+  min-height: 100vh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.exam-card {
+  padding: 28rpx 24rpx;
+  transition: transform 0.15s ease;
+}
+
+.exam-card:active {
+  transform: scale(0.98);
+}
+
+.exam-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+}
+
+.exam-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.exam-desc {
+  line-height: 1.4;
+}
+
+.arrow {
+  font-size: 36rpx;
+  color: var(--text-hint);
+  flex-shrink: 0;
+}
+
+/* 骨架屏 */
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-card {
+  padding: 28rpx 24rpx;
+}
+
+.skeleton-title {
+  height: 32rpx;
+  width: 60%;
+}
+
+.skeleton-sub {
+  height: 24rpx;
+  width: 40%;
+}

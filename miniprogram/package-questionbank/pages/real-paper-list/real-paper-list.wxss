@@ -1,0 +1,76 @@
+.page {
+  padding: 20rpx 24rpx;
+  min-height: 100vh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.paper-card {
+  padding: 24rpx;
+  transition: transform 0.15s ease;
+}
+
+.paper-card:active {
+  transform: scale(0.98);
+}
+
+.paper-header {
+  flex-wrap: wrap;
+}
+
+.paper-year {
+  display: inline-flex;
+  align-items: center;
+  padding: 2rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  background: var(--primary);
+  color: #fff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.paper-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.arrow {
+  font-size: 36rpx;
+  color: var(--text-hint);
+  flex-shrink: 0;
+  margin-left: 12rpx;
+}
+
+.load-more {
+  padding: 28rpx 0;
+  text-align: center;
+}
+
+/* 骨架屏 */
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-card {
+  padding: 24rpx;
+}
+
+.skeleton-title {
+  height: 32rpx;
+  width: 65%;
+}
+
+.skeleton-sub {
+  height: 24rpx;
+  width: 35%;
+}

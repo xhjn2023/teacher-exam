@@ -1,0 +1,59 @@
+<view class="page">
+  <!-- 顶部进度 -->
+  <view class="top-bar">
+    <view class="title-row">
+      <text class="recite-title">主观题背诵</text>
+      <text class="recite-progress">{{current}} / {{total}}</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width:{{total ? (current/total*100) : 0}}%"></view>
+    </view>
+  </view>
+
+  <!-- 翻转卡片区域 -->
+  <scroll-view class="scroll-wrap" scroll-y enable-passive show-scrollbar="{{false}}">
+    <loading-skeleton wx:if="{{loading}}"></loading-skeleton>
+
+    <view wx:elif="{{items.length > 0}}" class="card-wrap">
+      <!-- 类型标签 -->
+      <view class="card-header">
+        <text class="card-index">第 {{current}} 题</text>
+        <text class="card-type tag">{{typeLabel}}</text>
+      </view>
+
+      <!-- 翻转卡片 -->
+      <flip-card
+        wx:for="{{items}}"
+        wx:key="_id"
+        wx:if="{{index === current - 1}}"
+        question="{{item.question}}"
+        answer="{{item.answer}}"
+      />
+
+      <!-- 知识点标签 -->
+      <view class="card-footer" wx:if="{{currentItem && currentItem.knowledgePoints}}">
+        <knowledge-tag
+          wx:for="{{currentItem.knowledgePoints}}"
+          wx:key="*this"
+          text="{{item}}"
+        ></knowledge-tag>
+      </view>
+    </view>
+
+    <empty-state
+      wx:elif="{{!loading && items.length === 0}}"
+      text="暂无主观题"
+      actionText="返回"
+      bind:action="goBack"
+    ></empty-state>
+
+    <view wx:if="{{loadingMore}}" class="loading-more">加载中...</view>
+    <view wx:elif="{{noMore && items.length > 0}}" class="no-more">— 已加载全部题目 —</view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="bar-btn {{current <= 1 ? 'disabled' : ''}}" bindtap="prevQ">上一题</view>
+    <view class="bar-btn primary {{current >= items.length && noMore ? 'disabled' : ''}}" bindtap="nextQ">下一题</view>
+  </view>
+</view>

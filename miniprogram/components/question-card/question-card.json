@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "option-item": "/components/option-item/option-item",
+    "knowledge-tag": "/components/knowledge-tag/knowledge-tag"
+  }
+}

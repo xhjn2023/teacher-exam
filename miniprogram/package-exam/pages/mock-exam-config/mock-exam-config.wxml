@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="content">
+    <!-- 科目选择 -->
+    <view class="section card">
+      <view class="section-label">选择科目</view>
+      <picker mode="selector" range="{{subjects}}" range-key="name" value="{{subjectIndex}}" bindchange="onSubjectChange">
+        <view class="picker-view flex-between">
+          <text class="{{selectedSubjectId ? '' : 'text-hint'}}">{{subjects[subjectIndex] ? subjects[subjectIndex]._examName + ' - ' + subjects[subjectIndex].name : '请选择科目'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 题目数量 -->
+    <view class="section card">
+      <view class="section-label">题目数量</view>
+      <view class="slider-wrap">
+        <slider
+          min="{{countRange.min}}"
+          max="{{countRange.max}}"
+          step="{{countRange.step}}"
+          value="{{questionCount}}"
+          activeColor="#5B8C7E"
+          backgroundColor="#E8ECEB"
+          block-size="22"
+          bindchange="onSliderChange"
+        />
+        <view class="slider-value">
+          <text class="count-num">{{questionCount}}</text>
+          <text class="count-unit">题</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 说明 -->
+    <view class="tips card">
+      <view class="tip-title">模拟考说明</view>
+      <view class="tip-item">· 系统随机从所选科目中抽题</view>
+      <view class="tip-item">· 答题不限时间，交卷后查看成绩</view>
+      <view class="tip-item">· 错题自动加入错题本供后续复习</view>
+    </view>
+
+    <!-- 开始按钮 -->
+    <view class="start-btn btn-primary" bindtap="onStartExam">开始模拟考</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="center-loading">
+    <text class="text-hint">加载中…</text>
+  </view>
+</view>

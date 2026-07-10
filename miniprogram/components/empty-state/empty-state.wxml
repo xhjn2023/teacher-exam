@@ -1,0 +1,6 @@
+<view class="empty">
+  <image class="empty-icon" src="{{icon}}" mode="aspectFit" wx:if="{{icon}}"></image>
+  <text class="empty-title">{{title}}</text>
+  <text class="empty-subtitle" wx:if="{{subtitle}}">{{subtitle}}</text>
+  <view class="empty-btn" wx:if="{{showBtn}}" bindtap="onAction">{{btnText || '去看看'}}</view>
+</view>

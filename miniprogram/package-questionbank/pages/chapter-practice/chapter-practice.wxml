@@ -1,0 +1,55 @@
+<import src="../../utils/virtual-scroll"/>
+<view class="page">
+  <view class="progress-bar">
+    <view class="progress-info">
+      <text class="progress-num">第{{current}}/{{total}}题</text>
+      <text class="progress-type">{{typeLabel}}</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width:{{total ? (current/total*100) : 0}}%"></view>
+    </view>
+  </view>
+
+  <scroll-view
+    class="scroll-wrap"
+    scroll-y
+    bindscroll="onScroll"
+    enable-passive
+    show-scrollbar="{{false}}"
+  >
+    <loading-skeleton wx:if="{{loading}}"></loading-skeleton>
+
+    <view wx:elif="{{total > 0}}" style="height:{{totalHeight}}px;position:relative">
+      <view style="transform:translateY({{offsetY}}px)">
+        <question-card
+          wx:for="{{visibleQuestions}}"
+          wx:key="_id"
+          question="{{item}}"
+          index="{{startIndex+index+1}}"
+          userAnswer="{{answers[item._id]}}"
+          showAnalysis="{{analysisMap[item._id]}}"
+          isFavorited="{{favMap[item._id]}}"
+          mode="practice"
+          bind:answer="onAnswer"
+          bind:submit="onSubmit"
+          bind:toggleFav="onToggleFav"
+        />
+      </view>
+    </view>
+
+    <empty-state
+      wx:elif="{{!loading && total === 0}}"
+      text="该章节暂无题目"
+      actionText="返回"
+      bind:action="goBack"
+    ></empty-state>
+
+    <view wx:if="{{loadingMore}}" class="loading-more">加载中...</view>
+    <view wx:elif="{{noMore && total > 0}}" class="no-more">— 已加载全部题目 —</view>
+  </scroll-view>
+
+  <view class="bottom-bar">
+    <view class="bar-btn {{current <= 1 ? 'disabled' : ''}}" bindtap="prevQ">上一题</view>
+    <view class="bar-btn primary {{current >= total ? 'disabled' : ''}}" bindtap="nextQ">下一题</view>
+  </view>
+</view>

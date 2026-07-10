@@ -1,0 +1,130 @@
+.page {
+  min-height: 100vh;
+  padding-bottom: 24rpx;
+}
+
+/* 科目tab */
+.tabs {
+  white-space: nowrap;
+  padding: 16rpx 24rpx;
+  background: var(--bg-card);
+  border-bottom: 1rpx solid var(--border);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 28rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  background: var(--bg-page);
+  margin-right: 16rpx;
+}
+
+.tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* 操作栏 */
+.action-bar {
+  padding: 16rpx 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear-btn {
+  padding: 8rpx 24rpx;
+  border-radius: 24rpx;
+  background: var(--danger-pale);
+}
+
+/* 错题列表 */
+.list {
+  padding: 0 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.error-item {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.error-main {
+  padding: 24rpx;
+  transition: transform 0.2s ease;
+  background: var(--bg-card);
+}
+
+.error-item.swiped .error-main {
+  transform: translateX(-120rpx);
+}
+
+.error-type {
+  margin-bottom: 8rpx;
+}
+
+.error-content {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 滑动删除区域 */
+.delete-area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120rpx;
+  height: 100%;
+  background: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.load-more {
+  padding: 28rpx 0;
+  text-align: center;
+}
+
+/* 骨架屏 */
+.skeleton-list {
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-card {
+  padding: 24rpx;
+}
+
+.skeleton-tag {
+  height: 24rpx;
+  width: 100rpx;
+  border-radius: 8rpx;
+}
+
+.skeleton-text {
+  height: 32rpx;
+  width: 80%;
+}
+
+.skeleton-sub {
+  height: 24rpx;
+  width: 50%;
+}

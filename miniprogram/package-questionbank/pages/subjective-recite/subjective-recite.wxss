@@ -1,0 +1,139 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-page);
+}
+
+/* 顶部进度 */
+.top-bar {
+  padding: 16rpx 32rpx 12rpx;
+  background: var(--bg-card);
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.recite-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.recite-progress {
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+.progress-track {
+  height: 6rpx;
+  background: var(--border);
+  border-radius: 3rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 3rpx;
+  transition: width 0.3s ease;
+}
+
+/* 滚动区域 */
+.scroll-wrap {
+  flex: 1;
+  overflow: hidden;
+  padding: 24rpx;
+}
+
+.card-wrap {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24rpx;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.card-index {
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+.card-type {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  background: var(--primary-pale);
+  color: var(--primary);
+}
+
+.card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid var(--border);
+}
+
+/* 加载状态 */
+.loading-more {
+  text-align: center;
+  padding: 24rpx;
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+.no-more {
+  text-align: center;
+  padding: 32rpx;
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 32rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: var(--bg-card);
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.04);
+  gap: 20rpx;
+}
+
+.bar-btn {
+  flex: 1;
+  text-align: center;
+  padding: 22rpx 0;
+  font-size: 28rpx;
+  border-radius: var(--radius);
+  background: var(--bg-page);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.bar-btn.primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.bar-btn:active {
+  opacity: 0.8;
+}
+
+.bar-btn.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

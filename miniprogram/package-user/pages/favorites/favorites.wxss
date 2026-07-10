@@ -1,0 +1,66 @@
+.page {
+  padding: 20rpx 24rpx;
+  min-height: 100vh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.fav-item {
+  padding: 24rpx;
+  transition: transform 0.15s ease;
+}
+
+.fav-item:active {
+  transform: scale(0.99);
+}
+
+.fav-header {
+  flex-wrap: wrap;
+}
+
+.fav-content {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.fav-star {
+  font-size: 32rpx;
+  flex-shrink: 0;
+  margin-left: 12rpx;
+}
+
+.load-more {
+  padding: 28rpx 0;
+  text-align: center;
+}
+
+/* 骨架屏 */
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.skeleton-card {
+  padding: 24rpx;
+}
+
+.skeleton-tag {
+  height: 24rpx;
+  width: 100rpx;
+  border-radius: 8rpx;
+}
+
+.skeleton-text {
+  height: 32rpx;
+  width: 75%;
+}
