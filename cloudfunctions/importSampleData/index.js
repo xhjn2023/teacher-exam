@@ -1047,26 +1047,47 @@ exports.main = async function () {
   return result;
 };
 
-/** 幂等插入：按 _id 去重 */
+/** 幂等批量插入：按 _id 去重，批量查询已存在的，批量插入缺失的 */
 async function upsertAll(collectionName, docs) {
-  var inserted = 0, skipped = 0;
-  for (var i = 0; i < docs.length; i++) {
+  const ids = docs.map(function(d) { return d._id; });
+  // 批量查询已存在的记录（一次请求）
+  var existingIds = [];
+  try {
+    var res = await db.collection(collectionName).where({
+      _id: db.command.in(ids)
+    }).field({ _id: true }).get();
+    if (res.data) {
+      existingIds = res.data.map(function(r) { return r._id; });
+    }
+  } catch (e) {
+    // 集合为空或查询失败，视为无已有记录
+  }
+  var existingSet = {};
+  existingIds.forEach(function(id) { existingSet[id] = true; });
+
+  // 过滤出需要插入的文档
+  var toInsert = docs.filter(function(d) { return !existingSet[d._id]; });
+  var skipped = docs.length - toInsert.length;
+
+  // 批量插入（每次最多 1000 条）
+  var inserted = 0;
+  if (toInsert.length > 0) {
     try {
-      var existing = await db.collection(collectionName).doc(docs[i]._id).get();
-      if (existing.data) {
-        skipped++;
+      var addRes = await db.collection(collectionName).add({ data: toInsert });
+      if (addRes && addRes._ids) {
+        inserted = addRes._ids.length;
       } else {
-        await db.collection(collectionName).add({ data: docs[i] });
-        inserted++;
+        inserted = toInsert.length;
       }
     } catch (e) {
-      // doc 不存在会抛出错误，此时直接插入
-      try {
-        await db.collection(collectionName).add({ data: docs[i] });
-        inserted++;
-      } catch (e2) {
-        // 可能重复添加错误
-        skipped++;
+      // 批量失败时降级为逐条插入
+      for (var i = 0; i < toInsert.length; i++) {
+        try {
+          await db.collection(collectionName).add({ data: toInsert[i] });
+          inserted++;
+        } catch (e2) {
+          skipped++;
+        }
       }
     }
   }
