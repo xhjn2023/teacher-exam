@@ -1,0 +1,287 @@
+.page {
+  padding: 24rpx;
+  min-height: 100vh;
+  padding-bottom: 180rpx; /* 给底部固定栏留空间 */
+}
+
+/* 顶部 Tab */
+.tabs {
+  display: flex;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 8rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  border-radius: 12rpx;
+  transition: all 0.2s;
+}
+
+.tab-item.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 空状态 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+  color: var(--text-hint);
+  font-size: 28rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 前三名领奖台 */
+.podium {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 32rpx 16rpx 0;
+  margin-bottom: 24rpx;
+  background: linear-gradient(180deg, #f7faf9 0%, #ffffff 100%);
+}
+
+.podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+
+.podium-avatar {
+  position: relative;
+  width: 100rpx;
+  height: 100rpx;
+  margin-bottom: 12rpx;
+}
+
+.podium-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 4rpx solid #eee;
+  background: #f0f0f0;
+}
+
+.podium-img.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-pale);
+}
+
+.medal {
+  position: absolute;
+  bottom: -8rpx;
+  right: -8rpx;
+  font-size: 36rpx;
+  line-height: 1;
+}
+
+.podium-name {
+  font-size: 24rpx;
+  color: var(--text-primary);
+  max-width: 180rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 4rpx;
+}
+
+.podium-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 16rpx;
+}
+
+.podium-bar {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: 700;
+  border-radius: 12rpx 12rpx 0 0;
+  line-height: 1.6;
+}
+
+.bar-1 {
+  height: 120rpx;
+  background: linear-gradient(180deg, #F5C24A 0%, #E8A92C 100%);
+}
+
+.bar-2 {
+  height: 90rpx;
+  background: linear-gradient(180deg, #D8DDE2 0%, #B8BFC7 100%);
+}
+
+.bar-3 {
+  height: 70rpx;
+  background: linear-gradient(180deg, #E0A074 0%, #C47F4E 100%);
+}
+
+/* 第一名特殊光圈 */
+.gold .podium-img {
+  border-color: #F5C24A;
+  box-shadow: 0 0 16rpx rgba(245, 194, 74, 0.5);
+}
+
+.silver .podium-img {
+  border-color: #B8BFC7;
+}
+
+.bronze .podium-img {
+  border-color: #C47F4E;
+}
+
+/* 排行榜列表 */
+.rank-list {
+  padding: 8rpx 24rpx;
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.rank-row:last-child {
+  border-bottom: none;
+}
+
+.rank-num {
+  width: 64rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.rank-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin: 0 20rpx;
+  background: #f0f0f0;
+}
+
+.rank-avatar.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-pale);
+}
+
+.rank-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.rank-name {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rank-sub {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-top: 6rpx;
+}
+
+.rank-value {
+  display: flex;
+  align-items: baseline;
+}
+
+.rv-num {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.rv-unit {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-left: 4rpx;
+}
+
+/* 底部固定：我的排名 */
+.my-rank-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 20rpx 32rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.my-rank-num {
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-label {
+  font-size: 22rpx;
+  color: var(--text-hint);
+}
+
+.mr-value {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 4rpx;
+}
+
+.my-rank-stats {
+  display: flex;
+  gap: 32rpx;
+}
+
+.mrs-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mrs-num {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mrs-label {
+  font-size: 20rpx;
+  color: var(--text-hint);
+  margin-top: 4rpx;
+}

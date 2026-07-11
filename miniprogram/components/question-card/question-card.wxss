@@ -246,3 +246,119 @@
 
 /* 已回答状态微调 */
 .q-card.answered { opacity: 1; }
+
+/* 题目报错入口 */
+.report-entry {
+  display: inline-block;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #888;
+  padding: 4rpx 0;
+}
+
+.report-entry:active {
+  color: #5B8C7E;
+}
+
+/* 报错弹窗 */
+.report-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.report-popup {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx 28rpx;
+  box-sizing: border-box;
+}
+
+.report-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.report-section-label {
+  font-size: 26rpx;
+  color: #555;
+  margin-top: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.report-type-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.report-type-item {
+  padding: 10rpx 24rpx;
+  font-size: 26rpx;
+  color: #555;
+  background: #F2F4F3;
+  border: 2rpx solid #E8ECEA;
+  border-radius: 28rpx;
+}
+
+.report-type-item.selected {
+  color: #fff;
+  background: #5B8C7E;
+  border-color: #5B8C7E;
+}
+
+.report-textarea {
+  width: 100%;
+  min-height: 140rpx;
+  border: 2rpx solid #DDE4E2;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  font-size: 26rpx;
+  color: #333;
+  box-sizing: border-box;
+  margin-bottom: 24rpx;
+}
+
+.report-placeholder {
+  color: #bbb;
+}
+
+.report-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.report-btn {
+  flex: 1;
+  height: 76rpx;
+  line-height: 76rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 38rpx;
+}
+
+.report-btn.cancel {
+  color: #666;
+  background: #F2F4F3;
+}
+
+.report-btn.submit {
+  color: #fff;
+  background: #5B8C7E;
+}
+
+.report-btn.submit.disabled {
+  opacity: 0.6;
+}

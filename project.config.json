@@ -51,7 +51,7 @@
   "simulatorPluginLibVersion": {},
   "cloudfunctionRoot": "cloudfunctions/",
   "miniprogramRoot": "miniprogram/",
-  "cloudfunctionTemplateRoot": "",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "cloudBaseSetting": {},
   "editorSetting": {},
   "condition": {}

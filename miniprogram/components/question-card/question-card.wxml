@@ -61,10 +61,42 @@
     <view class="knowledge-tags" wx:if="{{question.knowledgeTags && question.knowledgeTags.length}}">
       <knowledge-tag wx:for="{{question.knowledgeTags}}" wx:key="name" name="{{item.name}}" detail="{{item.detail}}"></knowledge-tag>
     </view>
+    <view class="report-entry" bindtap="onReport">题目报错</view>
   </view>
 
   <!-- 操作区 -->
   <view class="q-actions" wx:if="{{!showAnalysis}}">
     <view class="action-btn" bindtap="onSubmit">提交答案</view>
+  </view>
+
+  <!-- 题目报错弹窗 -->
+  <view class="report-mask" wx:if="{{showReportPopup}}" bindtap="onReportClose">
+    <view class="report-popup" catchtap="onReportStop">
+      <view class="report-title">题目报错</view>
+      <view class="report-section-label">报错类型</view>
+      <view class="report-type-list">
+        <view
+          wx:for="{{reportTypes}}"
+          wx:key="value"
+          class="report-type-item {{reportType === item.value ? 'selected' : ''}}"
+          bindtap="onReportTypeSelect"
+          data-value="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+      <view class="report-section-label">详细描述</view>
+      <textarea
+        class="report-textarea"
+        value="{{reportContent}}"
+        bindinput="onReportContentInput"
+        placeholder="请描述具体问题，帮助我们核实"
+        placeholder-class="report-placeholder"
+        maxlength="200"
+        auto-height
+      />
+      <view class="report-btns">
+        <view class="report-btn cancel" bindtap="onReportClose">取消</view>
+        <view class="report-btn submit {{reportSubmitting ? 'disabled' : ''}}" bindtap="onReportSubmit">提交</view>
+      </view>
+    </view>
   </view>
 </view>

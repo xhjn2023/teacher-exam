@@ -93,6 +93,8 @@ exports.main = async function (event, context) {
         totalDays: _.inc(isNewDay ? 1 : 0),
         totalCount: _.inc(answers.length),
         correctCount: _.inc(correctCount),
+        // 答题积分：每答对1题 +1 积分
+        points: _.inc(correctCount),
         dailyStats: dailyStats,
         updateTime: new Date()
       }

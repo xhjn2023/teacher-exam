@@ -8,6 +8,7 @@ Page({
     totalCount: 0,
     questions: [],
     answers: {},
+    correctnessMap: {},
     current: 0,
     totalDuration: 0,
     showSheet: false,
@@ -123,6 +124,7 @@ Page({
 
     var answers = this.data.answers;
     var questions = this.data.questions;
+    var correctnessMap = this.data.correctnessMap;
 
     // 计算成绩
     var correctCount = 0;
@@ -132,13 +134,12 @@ Page({
 
     questions.forEach(function (q) {
       var userAnswer = answers[q._id] || '';
-      var isCorrect = false;
+      var isCorrect = !!correctnessMap[q._id];
 
       if (!userAnswer) {
         unansweredCount++;
-      } else if (String(userAnswer) === String(q.answer)) {
+      } else if (isCorrect) {
         correctCount++;
-        isCorrect = true;
       } else {
         wrongCount++;
       }
@@ -301,5 +302,13 @@ Page({
       remainingSeconds: this.data.remainingSeconds,
       examType: 'mock'
     }).catch(function () {});
+  },
+
+  _findQuestionById: function (qid) {
+    var items = this.data.questions || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i]._id === qid) return items[i];
+    }
+    return null;
   }
 });

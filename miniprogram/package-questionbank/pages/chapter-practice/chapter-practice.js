@@ -8,6 +8,8 @@ Page({
     subjectId: '',
     chapterId: '',
     chapterTitle: '',
+    random: false,
+    type: '',
     current: 0,
     total: 0,
     typeLabel: '',
@@ -23,6 +25,7 @@ Page({
     analysisMap: {},
     favMap: {},
     elapsedMap: {},
+    correctnessMap: {},
 
     // 分页
     page: 1,
@@ -37,13 +40,17 @@ Page({
     var subjectId = options.subjectId || '';
     var chapterId = options.chapterId || '';
     var chapterTitle = decodeURIComponent(options.chapterTitle || '章节练习');
+    var random = options.random === '1';
+    var type = options.type || '';
 
     wx.setNavigationBarTitle({ title: chapterTitle });
 
     this.setData({
       subjectId: subjectId,
       chapterId: chapterId,
-      chapterTitle: chapterTitle
+      chapterTitle: chapterTitle,
+      random: random,
+      type: type
     });
 
     // 初始化虚拟滚动
@@ -100,12 +107,19 @@ Page({
     var answers = this.data.answers;
     answers[questionId] = answer;
 
+    // 计算并记录正确性（供离线同步使用）
+    var question = this._findQuestionById(questionId);
+    var isCorrect = question ? (String(answer) === String(question.answer)) : false;
+    var correctnessMap = this.data.correctnessMap;
+    correctnessMap[questionId] = isCorrect;
+
     var analysisMap = this.data.analysisMap;
     analysisMap[questionId] = true;
 
     this.setData({
       answers: answers,
-      analysisMap: analysisMap
+      analysisMap: analysisMap,
+      correctnessMap: correctnessMap
     });
   },
 
@@ -183,9 +197,11 @@ Page({
     request.callFunction('getQuestions', {
       subjectId: this.data.subjectId,
       chapterId: this.data.chapterId,
+      type: this.data.type,
+      random: this.data.random,
       page: page,
       pageSize: this.data.pageSize
-    }, { cacheTTL: config.CACHE_TTL.QUESTIONS })
+    }, { cacheTTL: this.data.random ? 0 : config.CACHE_TTL.QUESTIONS })
       .then(function (result) {
         var list = (result && result.list) || [];
         var total = (result && result.total) || 0;
@@ -283,12 +299,14 @@ Page({
   _syncUserData: function () {
     var answers = this.data.answers;
     var elapsedMap = this.data.elapsedMap;
+    var correctnessMap = this.data.correctnessMap;
     var answerList = [];
 
     Object.keys(answers).forEach(function (qid) {
       answerList.push({
         questionId: qid,
         userAnswer: answers[qid],
+        isCorrect: !!correctnessMap[qid],
         elapsed: elapsedMap[qid] || 0,
         chapterId: this.data.chapterId,
         subjectId: this.data.subjectId
@@ -298,5 +316,13 @@ Page({
     if (answerList.length > 0) {
       request.callFunction('syncUserData', { answers: answerList }).catch(function () {});
     }
+  },
+
+  _findQuestionById: function (qid) {
+    var items = (this._vs && this._vs._items) || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i]._id === qid) return items[i];
+    }
+    return null;
   }
 });

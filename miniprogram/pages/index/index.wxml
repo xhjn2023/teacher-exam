@@ -19,8 +19,8 @@
       </view>
       <view class="stat-divider"></view>
       <view class="stat-item">
-        <text class="stat-num">{{studyData.correctRate || '0%'}}</text>
-        <text class="stat-label">正确率</text>
+        <text class="stat-num">{{studyData.points || 0}}</text>
+        <text class="stat-label">积分</text>
       </view>
     </view>
   </view>
@@ -44,6 +44,14 @@
   <view class="section">
     <view class="section-title">快捷入口</view>
     <view class="quick-grid">
+      <view class="quick-item card" bindtap="goCheckin">
+        <text class="quick-icon">📅</text>
+        <text class="quick-label">每日签到</text>
+      </view>
+      <view class="quick-item card" bindtap="goRanking">
+        <text class="quick-icon">🏆</text>
+        <text class="quick-label">排行榜</text>
+      </view>
       <view class="quick-item card" bindtap="goRecite">
         <text class="quick-icon">📖</text>
         <text class="quick-label">主观题背诵</text>

@@ -17,7 +17,10 @@ exports.main = function (event, context) {
     totalDays: 0,
     totalCount: 0,
     correctCount: 0,
-    correctRate: 0
+    correctRate: 0,
+    points: 0,
+    streak: 0,
+    lastCheckinDate: ''
   };
 
   if (!userId) return empty;
@@ -36,7 +39,10 @@ exports.main = function (event, context) {
         totalDays: p.totalDays || 0,
         totalCount: p.totalCount || 0,
         correctCount: p.correctCount || 0,
-        correctRate: p.correctRate || 0
+        correctRate: p.correctRate || 0,
+        points: p.points || 0,
+        streak: p.streak || 0,
+        lastCheckinDate: p.lastCheckinDate || ''
       };
     })
     .catch(function () { return empty; });

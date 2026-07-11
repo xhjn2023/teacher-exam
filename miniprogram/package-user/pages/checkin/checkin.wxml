@@ -1,0 +1,66 @@
+<view class="page">
+  <!-- 积分总览 -->
+  <view class="points-hero card">
+    <view class="points-num">{{points}}</view>
+    <view class="points-label">我的积分</view>
+    <view class="streak-badge" wx:if="{{streak > 0}}">
+      <text class="streak-fire">🔥</text>
+      <text>连续{{streak}}天</text>
+    </view>
+  </view>
+
+  <!-- 签到按钮 -->
+  <view class="checkin-btn-wrap">
+    <button class="checkin-btn {{todayChecked ? 'checked' : ''}}" bindtap="onCheckin" disabled="{{todayChecked}}">
+      <text wx:if="{{todayChecked}}">✓ 今日已签到</text>
+      <text wx:else>立即签到 +{{rules.daily || 5}}积分</text>
+    </button>
+  </view>
+
+  <!-- 本月日历 -->
+  <view class="calendar card">
+    <view class="calendar-title">{{monthLabel}}签到</view>
+    <view class="calendar-week">
+      <text class="week-day">日</text>
+      <text class="week-day">一</text>
+      <text class="week-day">二</text>
+      <text class="week-day">三</text>
+      <text class="week-day">四</text>
+      <text class="week-day">五</text>
+      <text class="week-day">六</text>
+    </view>
+    <view class="calendar-grid">
+      <view class="cal-cell {{item.empty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}} {{item.checked ? 'checked' : ''}}" wx:for="{{calendarDays}}" wx:key="index">
+        <block wx:if="{{!item.empty}}">
+          <text class="cal-day">{{item.day}}</text>
+          <text class="cal-check" wx:if="{{item.checked}}">✓</text>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分规则 -->
+  <view class="rules card">
+    <view class="rules-title">积分规则</view>
+    <view class="rule-item">
+      <text class="rule-icon">📅</text>
+      <text class="rule-text">每日签到</text>
+      <text class="rule-points">+{{rules.daily || 5}}</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-icon">🎯</text>
+      <text class="rule-text">连续7天签到</text>
+      <text class="rule-points">+{{rules.streak7 || 10}}</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-icon">🏆</text>
+      <text class="rule-text">连续30天签到</text>
+      <text class="rule-points">+{{rules.streak30 || 50}}</text>
+    </view>
+    <view class="rule-item">
+      <text class="rule-icon">✅</text>
+      <text class="rule-text">答对1题</text>
+      <text class="rule-points">+1</text>
+    </view>
+  </view>
+</view>

@@ -19,7 +19,9 @@ exports.main = async function () {
     { name: 'user_progress', desc: '用户学习数据' },
     { name: 'user_answers', desc: '用户答题记录' },
     { name: 'user_favorites', desc: '用户收藏' },
-    { name: 'user_error_book', desc: '错题本' }
+    { name: 'user_error_book', desc: '错题本' },
+    { name: 'user_checkin', desc: '签到记录' },
+    { name: 'question_reports', desc: '题目报错反馈' }
   ];
 
   for (var i = 0; i < collections.length; i++) {

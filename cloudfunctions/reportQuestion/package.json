@@ -1,0 +1,9 @@
+{
+  "name": "reportQuestion",
+  "version": "1.0.0",
+  "description": "题目报错反馈",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

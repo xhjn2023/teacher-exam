@@ -42,5 +42,13 @@ Page({
 
   goSearch: function () {
     wx.navigateTo({ url: '/pages/search/search' });
+  },
+
+  goCheckin: function () {
+    wx.navigateTo({ url: '/package-user/pages/checkin/checkin' });
+  },
+
+  goRanking: function () {
+    wx.navigateTo({ url: '/package-user/pages/ranking/ranking' });
   }
 });

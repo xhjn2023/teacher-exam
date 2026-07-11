@@ -1,0 +1,106 @@
+<view class="page">
+  <!-- 顶部 Tab -->
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 'points' ? 'active' : ''}}" data-tab="points" bindtap="onTabChange">积分榜</view>
+    <view class="tab-item {{activeTab === 'total' ? 'active' : ''}}" data-tab="total" bindtap="onTabChange">刷题榜</view>
+    <view class="tab-item {{activeTab === 'streak' ? 'active' : ''}}" data-tab="streak" bindtap="onTabChange">签到榜</view>
+  </view>
+
+  <!-- 加载骨架 -->
+  <block wx:if="{{loading}}">
+    <loading-skeleton type="list"></loading-skeleton>
+  </block>
+
+  <!-- 排行榜列表 -->
+  <block wx:else>
+    <view class="empty-tip" wx:if="{{displayList.length === 0}}">
+      <text class="empty-icon">📊</text>
+      <text>暂无排行数据</text>
+    </view>
+
+    <!-- 前三名领奖台 -->
+    <view class="podium card" wx:if="{{displayList.length >= 3}}">
+      <!-- 第二名 -->
+      <view class="podium-item silver">
+        <view class="podium-avatar">
+          <image class="podium-img" src="{{displayList[1].avatarUrl}}" mode="aspectFill" wx:if="{{displayList[1].avatarUrl}}"></image>
+          <view class="podium-img placeholder" wx:else>{{displayList[1].nickName[0] || '?'}}</view>
+          <view class="medal medal-2">🥈</view>
+        </view>
+        <view class="podium-name">{{displayList[1].nickName}}</view>
+        <view class="podium-value">{{activeTab === 'points' ? displayList[1].points + '分' : activeTab === 'total' ? displayList[1].totalCount + '题' : displayList[1].streak + '天'}}</view>
+        <view class="podium-bar bar-2">2</view>
+      </view>
+      <!-- 第一名 -->
+      <view class="podium-item gold">
+        <view class="podium-avatar">
+          <image class="podium-img" src="{{displayList[0].avatarUrl}}" mode="aspectFill" wx:if="{{displayList[0].avatarUrl}}"></image>
+          <view class="podium-img placeholder" wx:else>{{displayList[0].nickName[0] || '?'}}</view>
+          <view class="medal medal-1">🥇</view>
+        </view>
+        <view class="podium-name">{{displayList[0].nickName}}</view>
+        <view class="podium-value">{{activeTab === 'points' ? displayList[0].points + '分' : activeTab === 'total' ? displayList[0].totalCount + '题' : displayList[0].streak + '天'}}</view>
+        <view class="podium-bar bar-1">1</view>
+      </view>
+      <!-- 第三名 -->
+      <view class="podium-item bronze">
+        <view class="podium-avatar">
+          <image class="podium-img" src="{{displayList[2].avatarUrl}}" mode="aspectFill" wx:if="{{displayList[2].avatarUrl}}"></image>
+          <view class="podium-img placeholder" wx:else>{{displayList[2].nickName[0] || '?'}}</view>
+          <view class="medal medal-3">🥉</view>
+        </view>
+        <view class="podium-name">{{displayList[2].nickName}}</view>
+        <view class="podium-value">{{activeTab === 'points' ? displayList[2].points + '分' : activeTab === 'total' ? displayList[2].totalCount + '题' : displayList[2].streak + '天'}}</view>
+        <view class="podium-bar bar-3">3</view>
+      </view>
+    </view>
+
+    <!-- 第4名及以后 -->
+    <view class="rank-list card">
+      <view class="rank-row {{item.rank === 1 ? 'r1' : item.rank === 2 ? 'r2' : item.rank === 3 ? 'r3' : ''}}" wx:for="{{displayList}}" wx:key="rank" wx:if="{{item.rank > 3}}">
+        <view class="rank-num">{{item.rank}}</view>
+        <image class="rank-avatar" src="{{item.avatarUrl}}" mode="aspectFill" wx:if="{{item.avatarUrl}}"></image>
+        <view class="rank-avatar placeholder" wx:else>{{item.nickName[0] || '?'}}</view>
+        <view class="rank-info">
+          <view class="rank-name">{{item.nickName}}</view>
+          <view class="rank-sub">
+            <text wx:if="{{activeTab !== 'points'}}">{{item.points}}分</text>
+            <text wx:if="{{activeTab !== 'total'}}">· {{item.totalCount}}题</text>
+            <text wx:if="{{activeTab !== 'streak'}}">· 🔥{{item.streak}}</text>
+          </view>
+        </view>
+        <view class="rank-value">
+          <text class="rv-num" wx:if="{{activeTab === 'points'}}">{{item.points}}</text>
+          <text class="rv-num" wx:if="{{activeTab === 'total'}}">{{item.totalCount}}</text>
+          <text class="rv-num" wx:if="{{activeTab === 'streak'}}">{{item.streak}}</text>
+          <text class="rv-unit" wx:if="{{activeTab === 'points'}}">分</text>
+          <text class="rv-unit" wx:if="{{activeTab === 'total'}}">题</text>
+          <text class="rv-unit" wx:if="{{activeTab === 'streak'}}">天</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部固定：我的排名 -->
+  <view class="my-rank-bar">
+    <view class="my-rank-num">
+      <text class="mr-label">我的排名</text>
+      <text class="mr-value" wx:if="{{myRank > 0}}">第 {{myRank}} 名</text>
+      <text class="mr-value" wx:else>未上榜</text>
+    </view>
+    <view class="my-rank-stats">
+      <view class="mrs-item">
+        <text class="mrs-num">{{myPoints}}</text>
+        <text class="mrs-label">积分</text>
+      </view>
+      <view class="mrs-item">
+        <text class="mrs-num">{{myTotalCount}}</text>
+        <text class="mrs-label">刷题</text>
+      </view>
+      <view class="mrs-item">
+        <text class="mrs-num">{{myStreak}}</text>
+        <text class="mrs-label">连续签到</text>
+      </view>
+    </view>
+  </view>
+</view>

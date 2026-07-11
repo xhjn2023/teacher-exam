@@ -8,6 +8,7 @@ Page({
     paper: {},
     questions: [],
     answers: {},
+    correctnessMap: {},
     current: 0,
     totalDuration: 0,
     showSheet: false,
@@ -64,7 +65,13 @@ Page({
     var answers = this.data.answers;
     answers[questionId] = answer;
 
-    this.setData({ answers: answers });
+    // 计算并记录正确性（供同步使用）
+    var question = this._findQuestionById(questionId);
+    var isCorrect = question ? (String(answer) === String(question.answer)) : false;
+    var correctnessMap = this.data.correctnessMap;
+    correctnessMap[questionId] = isCorrect;
+
+    this.setData({ answers: answers, correctnessMap: correctnessMap });
     this._updateStats();
   },
 
@@ -119,6 +126,7 @@ Page({
 
     var answers = this.data.answers;
     var questions = this.data.questions;
+    var correctnessMap = this.data.correctnessMap;
 
     // 计算成绩
     var correctCount = 0;
@@ -126,7 +134,7 @@ Page({
 
     questions.forEach(function (q) {
       var userAnswer = answers[q._id] || '';
-      var isCorrect = String(userAnswer) === String(q.answer);
+      var isCorrect = !!correctnessMap[q._id];
       if (isCorrect) correctCount++;
       scoreList.push({
         questionId: q._id,
@@ -266,5 +274,13 @@ Page({
       remainingSeconds: this.data.remainingSeconds,
       examType: 'real'
     }).catch(function () {});
+  },
+
+  _findQuestionById: function (qid) {
+    var items = this.data.questions || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i]._id === qid) return items[i];
+    }
+    return null;
   }
 });

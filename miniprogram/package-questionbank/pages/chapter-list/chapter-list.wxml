@@ -1,4 +1,16 @@
 <view class="page">
+  <!-- 练习模式快捷入口 -->
+  <view class="mode-bar">
+    <view class="mode-item card" bindtap="onRandomPractice">
+      <text class="mode-icon">🎲</text>
+      <text class="mode-label">随机练习</text>
+    </view>
+    <view class="mode-item card" bindtap="onShowTypePicker">
+      <text class="mode-icon">🏷️</text>
+      <text class="mode-label">题型练习</text>
+    </view>
+  </view>
+
   <view class="list">
     <view class="chapter-card card" wx:for="{{chapters}}" wx:key="_id" bindtap="onChapterTap" data-item="{{item}}">
       <view class="flex-between">
@@ -24,6 +36,19 @@
     <view class="card skeleton-card" wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
       <view class="skeleton skeleton-title"></view>
       <view class="skeleton skeleton-badge"></view>
+    </view>
+  </view>
+
+  <!-- 题型选择弹窗 -->
+  <view class="picker-mask" wx:if="{{showTypePicker}}" bindtap="onHideTypePicker">
+    <view class="picker-content" catchtap>
+      <view class="picker-title">选择题型练习</view>
+      <view class="picker-item" wx:for="{{typeList}}" wx:key="value" bindtap="onTypePractice" data-item="{{item}}">
+        <text class="picker-item-icon">🏷️</text>
+        <text class="picker-item-label">{{item.label}}</text>
+        <text class="picker-item-arrow">›</text>
+      </view>
+      <view class="picker-cancel" bindtap="onHideTypePicker">取消</view>
     </view>
   </view>
 </view>

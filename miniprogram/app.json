@@ -16,7 +16,9 @@
     "package-user/pages/error-book/error-book",
     "package-user/pages/favorites/favorites",
     "package-user/pages/stats/stats",
-    "package-user/pages/settings/settings"
+    "package-user/pages/settings/settings",
+    "package-user/pages/checkin/checkin",
+    "package-user/pages/ranking/ranking"
   ],
   "window": {
     "backgroundTextStyle": "light",

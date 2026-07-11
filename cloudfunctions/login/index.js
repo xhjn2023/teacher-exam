@@ -70,7 +70,10 @@ exports.main = async function (event, context) {
         totalDays: latest.totalDays || 0,
         totalCount: latest.totalCount || 0,
         correctCount: latest.correctCount || 0,
-        correctRate: latest.correctRate || 0
+        correctRate: latest.correctRate || 0,
+        points: latest.points || 0,
+        streak: latest.streak || 0,
+        lastCheckinDate: latest.lastCheckinDate || ''
       }
     };
   } catch (err) {
