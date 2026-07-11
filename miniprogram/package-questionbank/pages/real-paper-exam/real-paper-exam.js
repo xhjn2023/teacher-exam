@@ -1,6 +1,6 @@
-var request = require('../../utils/request');
-var timerUtil = require('../../utils/timer');
-var config = require('../../utils/config');
+var request = require('../../../utils/request');
+var timerUtil = require('../../../utils/timer');
+var config = require('../../../utils/config');
 
 Page({
   data: {

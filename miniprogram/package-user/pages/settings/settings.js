@@ -1,5 +1,5 @@
-var request = require('../../utils/request');
-var cache = require('../../utils/cache');
+var request = require('../../../utils/request');
+var cache = require('../../../utils/cache');
 
 Page({
   data: {

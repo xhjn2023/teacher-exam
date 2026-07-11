@@ -1,5 +1,5 @@
-var request = require('../../utils/request');
-var format = require('../../utils/format');
+var request = require('../../../utils/request');
+var format = require('../../../utils/format');
 
 Page({
   data: {

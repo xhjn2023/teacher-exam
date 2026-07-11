@@ -1,5 +1,5 @@
-var request = require('../../utils/request');
-var config = require('../../utils/config');
+var request = require('../../../utils/request');
+var config = require('../../../utils/config');
 
 Page({
   data: {

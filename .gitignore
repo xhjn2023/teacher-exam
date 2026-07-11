@@ -1,3 +1,11 @@
 # WeChat DevTools
 project.private.config.json
 miniprogram/project.private.config.json
+
+# Admin Panel
+admin/node_modules/
+admin/dist/
+admin/.env.local
+
+# Trae
+.trae/

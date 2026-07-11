@@ -21,7 +21,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#5B8C7E",
-    "navigationBarTitleText": "教师编制刷题",
+    "navigationBarTitleText": "教师编刷题",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

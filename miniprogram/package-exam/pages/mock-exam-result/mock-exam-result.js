@@ -1,4 +1,4 @@
-var format = require('../../utils/format');
+var format = require('../../../utils/format');
 
 Page({
   data: {

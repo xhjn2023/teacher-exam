@@ -1,11 +1,12 @@
 var app = getApp();
-var request = require('../../utils/request');
+var request = require('../../../utils/request');
 
 Page({
   data: {
     userInfo: null,
     hasUserInfo: false,
-    studyData: null
+    studyData: null,
+    showLoginModal: false
   },
 
   onLoad: function () {
@@ -29,14 +30,70 @@ Page({
     }
   },
 
-  onGetUserInfo: function (e) {
-    if (e.detail.userInfo) {
-      this.setData({
-        userInfo: e.detail.userInfo,
-        hasUserInfo: true
-      });
-      app.globalData.userInfo = e.detail.userInfo;
+  // 显示登录弹窗
+  onShowLogin: function () {
+    this.setData({ showLoginModal: true });
+  },
+
+  // 隐藏登录弹窗
+  onHideLogin: function () {
+    this.setData({ showLoginModal: false });
+  },
+
+  // 选择头像
+  onChooseAvatar: function (e) {
+    var avatarUrl = e.detail.avatarUrl;
+    this.setData({
+      'tempUserInfo.avatarUrl': avatarUrl
+    });
+  },
+
+  // 输入昵称
+  onNicknameInput: function (e) {
+    this.setData({
+      'tempUserInfo.nickName': e.detail.value
+    });
+  },
+
+  // 确认登录
+  onConfirmLogin: function () {
+    var that = this;
+    var tempInfo = this.data.tempUserInfo || {};
+
+    if (!tempInfo.nickName || !tempInfo.avatarUrl) {
+      wx.showToast({ title: '请填写完整信息', icon: 'none' });
+      return;
     }
+
+    wx.showLoading({ title: '登录中...' });
+
+    // 调用登录云函数
+    request.callFunction('login', {
+      nickName: tempInfo.nickName,
+      avatarUrl: tempInfo.avatarUrl
+    }, { forceRefresh: true }).then(function (res) {
+      wx.hideLoading();
+      if (res && res.code === 0) {
+        var userInfo = {
+          nickName: res.nickName,
+          avatarUrl: res.avatarUrl
+        };
+        that.setData({
+          userInfo: userInfo,
+          hasUserInfo: true,
+          showLoginModal: false,
+          tempUserInfo: null
+        });
+        app.globalData.userInfo = userInfo;
+        wx.showToast({ title: '登录成功', icon: 'success' });
+      } else {
+        wx.showToast({ title: res.msg || '登录失败', icon: 'none' });
+      }
+    }).catch(function (err) {
+      wx.hideLoading();
+      wx.showToast({ title: '登录失败，请重试', icon: 'none' });
+      console.error('Login error:', err);
+    });
   },
 
   goErrorBook: function () {

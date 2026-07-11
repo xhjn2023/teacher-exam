@@ -1,7 +1,7 @@
-var VirtualScroll = require('../../utils/virtual-scroll');
-var request = require('../../utils/request');
-var timerUtil = require('../../utils/timer');
-var config = require('../../utils/config');
+var VirtualScroll = require('../../../utils/virtual-scroll');
+var request = require('../../../utils/request');
+var timerUtil = require('../../../utils/timer');
+var config = require('../../../utils/config');
 
 Page({
   data: {

@@ -2,13 +2,13 @@
   <!-- 用户信息头部 -->
   <view class="user-header card">
     <view class="flex-row gap-md">
-      <button class="avatar-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" wx:if="{{!hasUserInfo}}">
-        <view class="avatar-placeholder">🙂</view>
-      </button>
+      <view class="avatar-wrapper" bindtap="onShowLogin" wx:if="{{!hasUserInfo}}">
+        <view class="avatar-placeholder">�</view>
+      </view>
       <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" wx:else></image>
       <view class="flex-1">
         <view class="user-name" wx:if="{{hasUserInfo}}">{{userInfo.nickName || '备考同学'}}</view>
-        <view class="user-name" wx:else>点击头像登录</view>
+        <view class="user-name" wx:else bindtap="onShowLogin">点击登录</view>
         <view class="user-motto text-sm text-hint">努力的人，运气不会差</view>
       </view>
     </view>
@@ -81,6 +81,34 @@
           </view>
         </view>
         <view class="arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录弹窗 -->
+  <view class="modal-mask" wx:if="{{showLoginModal}}" bindtap="onHideLogin">
+    <view class="modal-content" catchtap>
+      <view class="modal-title">登录</view>
+
+      <!-- 头像选择 -->
+      <view class="form-item">
+        <view class="form-label">头像</view>
+        <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image class="avatar-preview" src="{{tempUserInfo.avatarUrl || ''}}" mode="aspectFill" wx:if="{{tempUserInfo.avatarUrl}}"></image>
+          <view class="avatar-placeholder" wx:else> 点击选择</view>
+        </button>
+      </view>
+
+      <!-- 昵称输入 -->
+      <view class="form-item">
+        <view class="form-label">昵称</view>
+        <input class="form-input" placeholder="请输入昵称" value="{{tempUserInfo.nickName}}" bindinput="onNicknameInput" maxlength="20" />
+      </view>
+
+      <!-- 按钮 -->
+      <view class="modal-btns">
+        <button class="btn btn-cancel" bindtap="onHideLogin">取消</button>
+        <button class="btn btn-confirm" bindtap="onConfirmLogin">确认</button>
       </view>
     </view>
   </view>
