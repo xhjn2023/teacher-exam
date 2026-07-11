@@ -5,12 +5,12 @@ import type { Admin } from "../types";
 interface AuthState {
   currentAdmin: Admin | null;
   isAuthenticated: boolean;
-  login: (username: string, password: string) => boolean;
+  login: (username: string, password: string, admin?: Admin) => boolean;
   logout: () => void;
   updateProfile: (data: Partial<Admin>) => void;
 }
 
-// 默认超级管理员账号
+// 默认超级管理员账号（作为降级方案）
 const DEFAULT_ADMIN: Admin = {
   _id: "admin-001",
   username: "admin",
@@ -31,8 +31,19 @@ export const useAuthStore = create<AuthState>()(
       currentAdmin: null,
       isAuthenticated: false,
 
-      login: (username: string, password: string) => {
-        // 验证默认管理员账号
+      login: (username: string, password: string, admin?: Admin) => {
+        // 如果后端返回了 admin 对象，直接使用
+        if (admin) {
+          const now = new Date().toISOString();
+          const adminWithLoginTime: Admin = {
+            ...admin,
+            lastLoginTime: now,
+          };
+          set({ currentAdmin: adminWithLoginTime, isAuthenticated: true });
+          return true;
+        }
+
+        // 降级方案：验证默认管理员账号
         if (
           username === DEFAULT_ADMIN.username &&
           password === DEFAULT_ADMIN.password

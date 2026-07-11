@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GraduationCap, Lock, User, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { Button, Input } from "@/components/ui";
+import { post, setToken } from "@/api/client";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -34,16 +35,39 @@ export default function Login() {
     if (!validate()) return;
 
     setLoading(true);
-    // 模拟登录请求延迟
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    try {
+      // 调用后端登录 API
+      const res = await post<{ token: string; admin: any }>("/auth/login", {
+        username: username.trim(),
+        password,
+      });
 
-    const ok = login(username.trim(), password);
-    if (ok) {
+      // 保存 JWT token
+      setToken(res.token);
+
+      // 映射后端字段到前端 Admin 类型
+      const adminData = {
+        _id: res.admin.id,
+        username: res.admin.username,
+        name: res.admin.name,
+        role: res.admin.role,
+        avatar: res.admin.avatar || "",
+        email: res.admin.email || "",
+        phone: res.admin.phone || "",
+        lastLoginTime: new Date().toISOString(),
+        status: "active" as const,
+        createTime: res.admin.createTime || new Date().toISOString(),
+      };
+
+      // 更新本地 authStore
+      login(username.trim(), password, adminData);
+
       navigate("/dashboard", { replace: true });
-    } else {
-      setAuthError("用户名或密码错误，请重试");
+    } catch (error: any) {
+      setAuthError(error.message || "登录失败，请检查用户名和密码");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

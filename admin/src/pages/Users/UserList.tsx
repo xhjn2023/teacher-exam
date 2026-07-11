@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Eye, Pencil, Ban, Trash2, Plus, CheckCircle2 } from 'lucide-react'
 import {
@@ -24,7 +24,7 @@ import {
   formatNumber,
   formatPercent,
 } from '@/lib/utils'
-import { users as mockUsers } from '@/mock/data/users'
+import { getUsers } from '@/api/users'
 import type { User } from '@/types'
 import UserForm, { type UserFormValues } from './UserForm'
 
@@ -81,7 +81,8 @@ function getRateTextColor(rate: number): string {
 
 export default function UserList() {
   const navigate = useNavigate()
-  const [userList, setUserList] = useState<User[]>(() => [...mockUsers])
+  const [userList, setUserList] = useState<User[]>([])
+  const [loading, setLoading] = useState(true)
   const [keyword, setKeyword] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -90,6 +91,22 @@ export default function UserList() {
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<User | null>(null)
   const [deleteLoading, setDeleteLoading] = useState(false)
+
+  // 从 API 加载用户数据
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        setLoading(true)
+        const res = await getUsers({ page: 1, pageSize: 1000 })
+        setUserList(res.list)
+      } catch (error) {
+        console.error('加载用户列表失败:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadUsers()
+  }, [])
 
   const filteredUsers = useMemo(() => {
     const kw = keyword.trim().toLowerCase()

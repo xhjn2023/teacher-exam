@@ -6,6 +6,10 @@ miniprogram/project.private.config.json
 admin/node_modules/
 admin/dist/
 admin/.env.local
+admin/.env
+admin/server/node_modules/
+admin/server/dist/
+admin/server/.env
 
 # Trae
 .trae/

@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 import {
   Users,
   FileText,
@@ -30,13 +30,8 @@ import {
 } from "recharts";
 import { Card, CardBody } from "@/components/ui";
 import { cn, formatNumber } from "@/lib/utils";
-import {
-  kpiMetrics,
-  userGrowthTrend,
-  answerTrend,
-  questionTypeDistribution,
-  subjectDistribution,
-} from "@/mock/data/statistics";
+import { getDashboardStats } from "@/api/stats";
+import type { DashboardStats } from "@/api/stats";
 
 // KPI 配置：图标 + 渐变背景
 const kpiConfig: Record<
@@ -181,24 +176,43 @@ function QuickAction({ title, desc, icon, gradient, onClick }: QuickActionProps)
 }
 
 export default function Dashboard() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        console.error("加载仪表盘数据失败:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadStats();
+  }, []);
+
   // 计算平均正确率（取近12周答题趋势的平均正确率）
   const avgCorrectRate = useMemo(() => {
-    const rates = answerTrend.map((d) => d.correctRate as number);
+    if (!stats?.answerTrend) return 0;
+    const rates = stats.answerTrend.map((d) => d.correctRate as number);
     return Math.round(rates.reduce((a, b) => a + b, 0) / rates.length);
-  }, []);
+  }, [stats]);
 
   // KPI 卡片数据
   const kpiCards = useMemo(() => {
-    const totalUsers = kpiMetrics.find((k) => k.icon === "users")?.value ?? 0;
-    const totalQuestions = kpiMetrics.find((k) => k.icon === "file-text")?.value ?? 0;
-    const todayAnswers = kpiMetrics.find((k) => k.icon === "edit")?.value ?? 0;
+    if (!stats?.kpiMetrics) return [];
+    const totalUsers = stats.kpiMetrics.find((k) => k.icon === "users")?.value ?? 0;
+    const totalQuestions = stats.kpiMetrics.find((k) => k.icon === "file-text")?.value ?? 0;
+    const todayAnswers = stats.kpiMetrics.find((k) => k.icon === "edit")?.value ?? 0;
     return [
       { label: "用户总数", value: totalUsers, unit: "人", iconKey: "users", change: 12.5 },
       { label: "题目总数", value: totalQuestions, unit: "道", iconKey: "file-text", change: 5.6 },
       { label: "今日答题量", value: todayAnswers, unit: "次", iconKey: "edit", change: -3.2 },
       { label: "平均正确率", value: avgCorrectRate, unit: "%", iconKey: "rate", change: 1.8, isPercent: true },
     ];
-  }, [avgCorrectRate]);
+  }, [stats, avgCorrectRate]);
 
   // 快捷操作
   const quickActions: QuickActionProps[] = [
@@ -265,7 +279,7 @@ export default function Dashboard() {
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
-                    data={userGrowthTrend}
+                    data={stats?.userGrowthTrend || []}
                     margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -329,7 +343,7 @@ export default function Dashboard() {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={questionTypeDistribution}
+                      data={stats?.questionTypeDistribution || []}
                       dataKey="value"
                       nameKey="name"
                       cx="50%"
@@ -343,7 +357,7 @@ export default function Dashboard() {
                       labelLine={false}
                       style={{ fontSize: 11 }}
                     >
-                      {questionTypeDistribution.map((_, idx) => (
+                      {(stats?.questionTypeDistribution || []).map((_, idx) => (
                         <Cell key={idx} fill={PIE_COLORS[idx % PIE_COLORS.length]} />
                       ))}
                     </Pie>
@@ -378,7 +392,7 @@ export default function Dashboard() {
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={answerTrend}
+                    data={stats?.answerTrend || []}
                     margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -425,7 +439,7 @@ export default function Dashboard() {
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={subjectDistribution}
+                    data={stats?.subjectDistribution || []}
                     layout="vertical"
                     margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
                   >

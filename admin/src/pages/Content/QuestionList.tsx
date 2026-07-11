@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Plus,
   Eye,
@@ -34,7 +34,7 @@ import {
   ConfirmDialog,
   Modal,
 } from "@/components/ui";
-import { questions as questionData } from "@/mock/data/questions";
+import { getQuestions } from "@/api/questions";
 import { subjects } from "@/mock/data/subjects";
 import { QuestionForm } from "./QuestionForm";
 
@@ -59,7 +59,8 @@ function stripHtml(html: string): string {
 }
 
 export function QuestionList() {
-  const [list, setList] = useState<Question[]>(() => [...questionData]);
+  const [list, setList] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [subjectFilter, setSubjectFilter] = useState("");
@@ -81,6 +82,22 @@ export function QuestionList() {
 
   // 下架/发布确认
   const [toggling, setToggling] = useState<Question | null>(null);
+
+  // 加载题目数据
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        setLoading(true);
+        const res = await getQuestions({ page: 1, pageSize: 1000 });
+        setList(res.list);
+      } catch (error) {
+        console.error("加载题目列表失败:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadQuestions();
+  }, []);
 
   const subjectOptions = useMemo(
     () => [
