@@ -54,15 +54,16 @@ exports.main = async function (event, context) {
     }
   }
 
-  // 更新学习统计
+  // 更新学习统计（注意：user_progress 的 _id 是 login 时自动生成的，不等于 userId，必须用 where 查询）
   var correctCount = answers.filter(function (a) { return a.isCorrect; }).length;
-  var progressRes = await db.collection('user_progress').doc(userId).get();
-  var progress = progressRes.data;
+  var progressRes = await db.collection('user_progress').where({ userId: userId }).get();
+  var progress = progressRes.data[0];
 
   if (!progress) {
+    // 兜底：理论上 login 已创建记录，这里防止记录缺失
     await db.collection('user_progress').add({
       data: {
-        _id: userId,
+        userId: userId,
         totalDays: 1,
         totalCount: answers.length,
         correctCount: correctCount,
@@ -87,7 +88,7 @@ exports.main = async function (event, context) {
     var lastDate = progress.updateTime ? new Date(progress.updateTime) : new Date(0);
     var isNewDay = todayDate.toDateString() !== lastDate.toDateString();
 
-    await db.collection('user_progress').doc(userId).update({
+    await db.collection('user_progress').doc(progress._id).update({
       data: {
         totalDays: _.inc(isNewDay ? 1 : 0),
         totalCount: _.inc(answers.length),

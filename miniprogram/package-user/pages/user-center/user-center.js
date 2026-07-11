@@ -1,38 +1,54 @@
 var app = getApp();
-var request = require('../../../utils/request');
 
 Page({
   data: {
     userInfo: null,
     hasUserInfo: false,
     studyData: null,
-    showLoginModal: false
+    showLoginModal: false,
+    tempUserInfo: {
+      nickName: '',
+      avatarUrl: ''
+    }
   },
 
   onLoad: function () {
-    var appGlobal = app.globalData;
-    if (appGlobal.userInfo) {
-      this.setData({
-        userInfo: appGlobal.userInfo,
-        hasUserInfo: true
-      });
-    }
-    this.setData({ studyData: appGlobal.studyData || {} });
+    var that = this;
+    // 同步内存中的登录态到页面
+    this._syncFromGlobal();
+
+    // 订阅登录态变化（静默登录完成时会通知）
+    this._loginCb = function (loggedIn) {
+      that._syncFromGlobal();
+    };
+    app.onLoginStateChange(this._loginCb);
   },
 
   onShow: function () {
-    this.setData({ studyData: app.globalData.studyData || {} });
-    if (app.globalData.userInfo && !this.data.hasUserInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      });
-    }
+    this._syncFromGlobal();
   },
 
-  // 显示登录弹窗
+  onUnload: function () {
+    if (this._loginCb) app.offLoginStateChange(this._loginCb);
+  },
+
+  // 从 globalData 同步登录态与学习数据
+  _syncFromGlobal: function () {
+    var g = app.globalData;
+    this.setData({
+      userInfo: g.userInfo || null,
+      hasUserInfo: !!g.userInfo,
+      studyData: g.studyData || {}
+    });
+  },
+
+  // 显示登录弹窗（已登录则不弹）
   onShowLogin: function () {
-    this.setData({ showLoginModal: true });
+    if (this.data.hasUserInfo) return;
+    this.setData({
+      showLoginModal: true,
+      tempUserInfo: { nickName: '', avatarUrl: '' }
+    });
   },
 
   // 隐藏登录弹窗
@@ -42,17 +58,12 @@ Page({
 
   // 选择头像
   onChooseAvatar: function (e) {
-    var avatarUrl = e.detail.avatarUrl;
-    this.setData({
-      'tempUserInfo.avatarUrl': avatarUrl
-    });
+    this.setData({ 'tempUserInfo.avatarUrl': e.detail.avatarUrl });
   },
 
   // 输入昵称
   onNicknameInput: function (e) {
-    this.setData({
-      'tempUserInfo.nickName': e.detail.value
-    });
+    this.setData({ 'tempUserInfo.nickName': e.detail.value });
   },
 
   // 确认登录
@@ -60,39 +71,49 @@ Page({
     var that = this;
     var tempInfo = this.data.tempUserInfo || {};
 
-    if (!tempInfo.nickName || !tempInfo.avatarUrl) {
-      wx.showToast({ title: '请填写完整信息', icon: 'none' });
+    if (!tempInfo.nickName) {
+      wx.showToast({ title: '请输入昵称', icon: 'none' });
+      return;
+    }
+    if (!tempInfo.avatarUrl) {
+      wx.showToast({ title: '请选择头像', icon: 'none' });
       return;
     }
 
-    wx.showLoading({ title: '登录中...' });
+    wx.showLoading({ title: '登录中...', mask: true });
 
-    // 调用登录云函数
-    request.callFunction('login', {
-      nickName: tempInfo.nickName,
-      avatarUrl: tempInfo.avatarUrl
-    }, { forceRefresh: true }).then(function (res) {
+    // 使用 app 提供的登录方法（自动持久化 + 通知）
+    app.loginWithProfile(tempInfo.nickName, tempInfo.avatarUrl).then(function (result) {
       wx.hideLoading();
-      if (res && res.code === 0) {
-        var userInfo = {
-          nickName: res.nickName,
-          avatarUrl: res.avatarUrl
-        };
-        that.setData({
-          userInfo: userInfo,
-          hasUserInfo: true,
-          showLoginModal: false,
-          tempUserInfo: null
-        });
-        app.globalData.userInfo = userInfo;
-        wx.showToast({ title: '登录成功', icon: 'success' });
+      that._syncFromGlobal();
+      that.setData({ showLoginModal: false });
+
+      if (result.isNewUser) {
+        wx.showToast({ title: '欢迎加入，开始刷题吧', icon: 'none', duration: 2000 });
       } else {
-        wx.showToast({ title: res.msg || '登录失败', icon: 'none' });
+        wx.showToast({ title: '登录成功', icon: 'success' });
       }
     }).catch(function (err) {
       wx.hideLoading();
-      wx.showToast({ title: '登录失败，请重试', icon: 'none' });
+      wx.showToast({ title: (err && err.msg) || '登录失败，请重试', icon: 'none' });
       console.error('Login error:', err);
+    });
+  },
+
+  // 退出登录
+  onLogout: function () {
+    var that = this;
+    wx.showModal({
+      title: '退出登录',
+      content: '退出后将无法同步学习数据，确定继续？',
+      confirmColor: '#D96C6C',
+      success: function (res) {
+        if (res.confirm) {
+          app.logout();
+          that._syncFromGlobal();
+          wx.showToast({ title: '已退出登录', icon: 'none' });
+        }
+      }
     });
   },
 

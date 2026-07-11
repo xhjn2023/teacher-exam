@@ -3,8 +3,11 @@ var config = require('./config');
 
 var pendingRequests = {};
 
+// 需要登录态才能调用的受保护云函数
+var PROTECTED_FUNCTIONS = ['syncUserData', 'getUserProfile', 'getFavorites', 'getErrorBook', 'getStats', 'submitExamResult'];
+
 /**
- * 调用云函数（含缓存、去重、降级、断网处理）
+ * 调用云函数（含缓存、去重、降级、断网处理、登录态保障）
  * @param {string} name 云函数名
  * @param {object} data 参数
  * @param {object} options {cacheTTL, forceRefresh}
@@ -25,26 +28,38 @@ function callFunction(name, data, options) {
     if (cached) return Promise.resolve(cached);
   }
 
-  var requestPromise = checkNetwork().then(function (networkType) {
-    // 断网 → 降级缓存
-    if (networkType === 'none') {
-      var offlineCache = cache.getCache(cacheKey);
-      if (offlineCache) {
-        getApp().globalData.isOffline = true;
-        return offlineCache;
-      }
-      return Promise.reject({ code: 'OFFLINE_NO_CACHE' });
-    }
+  var app = getApp();
+  var willCall = Promise.resolve();
 
-    return wx.cloud.callFunction({ name: name, data: data }).then(function (res) {
-      var result = res.result;
-      if (cacheTTL > 0 && result) cache.setCache(cacheKey, result, cacheTTL);
-      return result;
-    }).catch(function (err) {
-      // 云函数异常 → 降级缓存
-      var fallback = cache.getCache(cacheKey);
-      if (fallback) return fallback;
-      return Promise.reject(err);
+  // 受保护接口：先确保登录
+  if (PROTECTED_FUNCTIONS.indexOf(name) >= 0 && app && app.ensureLogin) {
+    willCall = app.ensureLogin().catch(function () {
+      // 登录失败也继续调用，由云函数 OPENID 兜底（已登录只是优化体验）
+    });
+  }
+
+  var requestPromise = willCall.then(function () {
+    return checkNetwork().then(function (networkType) {
+      // 断网 → 降级缓存
+      if (networkType === 'none') {
+        var offlineCache = cache.getCache(cacheKey);
+        if (offlineCache) {
+          app.globalData.isOffline = true;
+          return offlineCache;
+        }
+        return Promise.reject({ code: 'OFFLINE_NO_CACHE' });
+      }
+
+      return wx.cloud.callFunction({ name: name, data: data }).then(function (res) {
+        var result = res.result;
+        if (cacheTTL > 0 && result) cache.setCache(cacheKey, result, cacheTTL);
+        return result;
+      }).catch(function (err) {
+        // 云函数异常 → 降级缓存
+        var fallback = cache.getCache(cacheKey);
+        if (fallback) return fallback;
+        return Promise.reject(err);
+      });
     });
   });
 

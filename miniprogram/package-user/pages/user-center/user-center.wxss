@@ -228,3 +228,16 @@
   background: var(--primary);
   color: #fff;
 }
+
+/* 退出登录项 */
+.logout-item {
+  margin-top: 8rpx;
+}
+
+.logout-icon {
+  background: rgba(217, 108, 108, 0.12) !important;
+}
+
+.logout-text {
+  color: #D96C6C !important;
+}

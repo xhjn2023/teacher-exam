@@ -17,7 +17,9 @@ module.exports = {
     CHAPTERS: 24 * 60 * 60 * 1000,
     QUESTIONS: 60 * 60 * 1000,
     REAL_PAPERS: 24 * 60 * 60 * 1000,
-    QUESTION_DETAIL: 60 * 60 * 1000
+    QUESTION_DETAIL: 60 * 60 * 1000,
+    // 登录态：30 天（用户主动退出前都视为登录）
+    LOGIN_INFO: 30 * 24 * 60 * 60 * 1000
   },
 
   // 缓存 Key
@@ -30,7 +32,9 @@ module.exports = {
     PAPER_PREFIX: 'paper_',
     OFFLINE_ANSWERS: 'offline_answers',
     USER_SETTINGS: 'user_settings',
-    USER_PROGRESS: 'user_progress'
+    USER_PROGRESS: 'user_progress',
+    // 登录态持久化 key
+    LOGIN_INFO: 'login_info'
   },
 
   // 题目类型

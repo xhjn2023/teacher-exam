@@ -83,6 +83,20 @@
         <view class="arrow">›</view>
       </view>
     </view>
+
+    <!-- 退出登录（仅登录态可见） -->
+    <view class="menu-item card logout-item" wx:if="{{hasUserInfo}}" bindtap="onLogout">
+      <view class="flex-between">
+        <view class="flex-row gap-md">
+          <view class="menu-icon logout-icon">🚪</view>
+          <view>
+            <view class="menu-title logout-text">退出登录</view>
+            <view class="menu-desc text-sm text-hint">清除当前账号登录态</view>
+          </view>
+        </view>
+        <view class="arrow">›</view>
+      </view>
+    </view>
   </view>
 
   <!-- 登录弹窗 -->

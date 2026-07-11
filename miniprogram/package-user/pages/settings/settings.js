@@ -56,8 +56,8 @@ Page({
 
   _doClear: function () {
     try {
-      // 保留必要缓存key
-      var keepKeys = ['user_settings'];
+      // 保留必要缓存 key：用户设置 + 登录态（清缓存不应让用户掉登录）
+      var keepKeys = ['user_settings', 'login_info'];
       var info = wx.getStorageInfoSync();
       var keys = info.keys || [];
       keys.forEach(function (key) {
@@ -65,13 +65,9 @@ Page({
           wx.removeStorageSync(key);
         }
       });
-      cache.clearAll && cache.clearAll();
     } catch (e) {
       // 降级处理
     }
-
-    // 清除内存缓存
-    if (cache.clearAll) cache.clearAll();
 
     this._calcCacheSize();
     request.showToast('缓存已清除');
